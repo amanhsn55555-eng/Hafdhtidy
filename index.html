@@ -661,7 +661,7 @@
   <div class="back-btn" onclick="goBack()">
     <i class="fas fa-arrow-right"></i>
   </div>
-  <h2><i class="fas fa-wallet"></i> المحفظة</h2>
+  <h2><i class="fas fa-wallet"></i> 🔥 </h2>
   <div style="width: 24px;"></div>
 </div>
 
@@ -679,7 +679,7 @@
     
     <div class="withdraw-summary">
       <div class="amount" id="withdrawAmountDisplay">0</div>
-      <div class="label">عملة TMX</div>
+      <div class="label">🔥 </div>
     </div>
     
     <p style="color: #94a3b8; text-align: center; margin-bottom: 20px; font-size: 14px;">
@@ -711,7 +711,6 @@
   appId: "1:800207969145:web:aa19b725d1c92dd48fada8",
   measurementId: "G-EFT566SJMP"
 };
-
   const MIN_WITHDRAW = 500;
   
   const app = initializeApp(firebaseConfig);
@@ -814,7 +813,7 @@
         <div class="balance-card money">
           <div class="card-icon"><i class="fas fa-money-bill"></i></div>
           <div class="card-value">${formatNumber(resources.money || 0)}</div>
-          <div class="card-label">TMX</div>
+          <div class="card-label">🔥 </div>
         </div>
         <div class="balance-card oil">
           <div class="card-icon"><i class="fas fa-oil-can"></i></div>
@@ -831,7 +830,7 @@
         </div>
         
         <div class="withdraw-info">
-          <p><i class="fas fa-info-circle"></i> الحد الأدنى للسحب: ${formatNumber(MIN_WITHDRAW)} عملة TMX</p>
+          <p><i class="fas fa-info-circle"></i> الحد الأدنى للسحب: ${formatNumber(MIN_WITHDRAW)}  🔥</p>
           <p><i class="fas fa-check-circle"></i> سيتم خصم المبلغ من رصيدك مباشرة</p>
           <p><i class="fas fa-shield-alt"></i> معاملات آمنة ومشفرة</p>
         </div>
@@ -846,7 +845,7 @@
         <div class="withdraw-input-wrapper">
           <i class="fas fa-money-bill"></i>
           <input type="number" id="withdrawAmount" placeholder="أدخل المبلغ المراد سحبه" min="${MIN_WITHDRAW}" max="${resources.money || 0}" oninput="updateWithdrawButton()">
-          <span>عملةTMX</span>
+          <span>عملة🔥</span>
         </div>
         
         <button class="withdraw-btn" id="withdrawBtn" onclick="openWithdrawModal()" disabled>
@@ -862,24 +861,24 @@
         </div>
         <div class="rates-grid">
           <div class="rate-item">
-            <div class="from"><i class="fas fa-money-bill"></i> 5 TMX</div>
+            <div class="from"><i class="fas fa-money-bill"></i> 5 🔥</div>
             <div class="to">→</div>
             <div class="value gold"><i class="fas fa-coins"></i> 10 ذهب</div>
           </div>
           <div class="rate-item">
-            <div class="from"><i class="fas fa-money-bill"></i> 5 TMX</div>
+            <div class="from"><i class="fas fa-money-bill"></i> 5 🔥</div>
             <div class="to">→</div>
             <div class="value elixir"><i class="fas fa-flask"></i> 15 إكسير</div>
           </div>
           <div class="rate-item">
-            <div class="from"><i class="fas fa-money-bill"></i> 5 TMX</div>
+            <div class="from"><i class="fas fa-money-bill"></i> 5 🔥</div>
             <div class="to">→</div>
             <div class="value oil"><i class="fas fa-oil-can"></i> 7 نفط</div>
           </div>
         </div>
         <div class="fee-warning">
           <i class="fas fa-exclamation-triangle"></i>
-          تنبيه: عند بيع العملات للTMX يتم استقطاع 50% كرسوم تحويل
+          تنبيه: عند بيع العملات ال🔥 يتم استقطاع 50% كرسوم تحويل
         </div>
       </div>
       
@@ -903,7 +902,7 @@
         <div class="exchange-form ${currentTab === 'buy' ? 'active' : ''}" id="buyForm">
           <div class="exchange-row">
             <div class="exchange-from">
-              <label class="exchange-label">المبلغ (TMX)</label>
+              <label class="exchange-label">المبلغ (🔥)</label>
               <div class="exchange-input-wrapper">
                 <i class="fas fa-money-bill"></i>
                 <input type="number" id="buyMoneyAmount" placeholder="0" min="1" value="5" oninput="updateBuyPreview()">
@@ -1017,11 +1016,11 @@
                   <i class="fas fa-hand-holding-usd"></i>
                 </div>
                 <div class="history-details">
-                  <div class="history-title">سحب TMX</div>
+                  <div class="history-title">سحب 🔥</div>
                   <div class="history-time">${item.createdAt ? new Date(item.createdAt).toLocaleString('ar-SA') : ''}</div>
                 </div>
                 <div class="history-amounts">
-                  <span class="history-from">-${formatNumber(item.amount)} TMX</span>
+                  <span class="history-from">-${formatNumber(item.amount)} 🔥</span>
                 </div>
               </div>
             `;
@@ -1111,7 +1110,7 @@
       
       closeWithdrawModal();
       renderWallet();
-      showToast(`تم سحب ${formatNumber(pendingWithdrawAmount)} عملة TMX`, true);
+      showToast(`تم سحب ${formatNumber(pendingWithdrawAmount)} عملة 🔥`, true);
       
     } catch (error) {
       console.error("خطأ في السحب:", error);
@@ -1170,7 +1169,7 @@
     
     document.getElementById('buyPreview').innerHTML = `
       <i class="fas fa-info-circle"></i>
-      <span>${moneyAmount} TMX = ${received.toFixed(1)} ${resourceNames[resource]}</span>
+      <span>${moneyAmount} 🔥 = ${received.toFixed(1)} ${resourceNames[resource]}</span>
     `;
   };
 
@@ -1183,7 +1182,7 @@
     
     document.getElementById('sellPreview').innerHTML = `
       <i class="fas fa-info-circle"></i>
-      <span>${amount} ${resourceNames[resource]} = ${moneyReceived.toFixed(0)} TMX (بعد استقطاع 50%)</span>
+      <span>${amount} ${resourceNames[resource]} = ${moneyReceived.toFixed(0)} 🔥 (بعد استقطاع 50%)</span>
     `;
   };
 
@@ -1208,7 +1207,7 @@
       const transaction = {
         type: 'buy',
         spent: moneyAmount,
-        spentCurrency: 'TMX',
+        spentCurrency: '🔥',
         received: received,
         receivedCurrency: resourceName,
         resourceName: resourceName,
@@ -1257,7 +1256,7 @@
         spent: amount,
         spentCurrency: resourceName,
         received: moneyReceived,
-        receivedCurrency: 'TMX',
+        receivedCurrency: '🔥',
         resourceName: resourceName,
         createdAt: Date.now()
       };
@@ -1275,7 +1274,7 @@
       transactions.push(transaction);
       
       renderWallet();
-      showToast(`تم بيع ${amount} ${resourceName} مقابل ${moneyReceived} TMX`);
+      showToast(`تم بيع ${amount} ${resourceName} مقابل ${moneyReceived} 🔥`);
     } catch (e) {
       showToast('فشلت العملية', false);
     }
