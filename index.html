@@ -6,1338 +6,412 @@
   <title>المحفظة • منصتي</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', 'Tajawal', sans-serif;
-    }
-
-    body {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
-      min-height: 100vh;
-      color: #f8fafc;
-      overflow-x: hidden;
-      width: 100%;
-      max-width: 100vw;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    /* ========== هيدر المحفظة ========== */
-    .wallet-header {
-      
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(20px);
-      padding: 12px 16px;
-      z-index: 999;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid rgba(251, 191, 36, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .wallet-header h2 {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      font-size: 20px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .wallet-header h2 i {
-      color: #fbbf24;
-    }
-
-    .back-btn {
-      cursor: pointer;
-      color: #94a3b8;
-      font-size: 20px;
-      transition: all 0.2s;
-    }
-
-    .back-btn:hover {
-      color: #fbbf24;
-    }
-
-    /* ========== عرض الأرصدة ========== */
-    .balances-container {
-      
-      margin-top: 65px;
-      padding: 16px;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .balance-cards {
-      
-      
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .balance-card {
-      
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-     
-      background: linear-gradient(145deg, #1e293b, #0f172a);
-      border-radius: 0px;
-      padding: 0px 1px;
-      text-align: center;
-      border: 0px solid rgba(255, 255, 255, 0.05);
-      box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
-    }
-
-    .balance-card.gold { border-bottom: 3px solid #fbbf24; }
-    .balance-card.elixir { border-bottom: 3px solid #a78bfa; }
-    .balance-card.money { border-bottom: 3px solid #34d399; }
-    .balance-card.oil { border-bottom: 3px solid #2dd4bf; }
-
-    .card-icon {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      width: 45px;
-      height: 45px;
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 10px;
-      font-size: 22px;
-    }
-
-    .gold .card-icon { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
-    .elixir .card-icon { background: rgba(167, 139, 250, 0.15); color: #a78bfa; }
-    .money .card-icon { background: rgba(52, 211, 153, 0.15); color: #34d399; }
-    .oil .card-icon { background: rgba(45, 212, 191, 0.15); color: #2dd4bf; }
-
-    .card-value {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      font-size: 24px;
-      font-weight: 800;
-      margin-bottom: 5px;
-    }
-
-    .card-label {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      font-size: 12px;
-      color: #94a3b8;
-      font-weight: 600;
-    }
-
-    /* ========== قسم السحب ========== */
-    .withdraw-section {
-      
-      background: linear-gradient(145deg, #1e293b, #0f172a);
-      border-radius: 25px;
-      padding: 20px;
-      margin-bottom: 20px;
-      border: 1px solid rgba(239, 68, 68, 0.2);
-    }
-
-    .section-title {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #ef4444;
-    }
-
-    .withdraw-info {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      background: rgba(239, 68, 68, 0.1);
-      border-radius: 15px;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-right: 3px solid #ef4444;
-    }
-
-    .withdraw-info p {
-      display: flex;
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-      font-size: 13px;
-      color: #cbd5e1;
-    }
-
-    .withdraw-info p:last-child {
-      margin-bottom: 0;
-    }
-
-    .withdraw-info i {
-      color: #ef4444;
-    }
-
-    .withdraw-input-wrapper {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      display: flex;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 15px;
-      padding: 5px 15px;
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      margin-bottom: 15px;
-    }
-
-    .withdraw-input-wrapper i {
-      color: #ef4444;
-      margin-left: 10px;
-    }
-
-    .withdraw-input-wrapper input {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      flex: 1;
-      background: transparent;
-      border: none;
-      padding: 14px 0;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
-      outline: none;
-      direction: rtl;
-    }
-
-    .withdraw-input-wrapper input::placeholder {
-      color: #475569;
-    }
-
-    .withdraw-input-wrapper span {
-      color: #ef4444;
-      font-weight: 700;
-      margin-right: 10px;
-    }
-
-    .quick-withdraw {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .quick-withdraw-btn {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      flex: 1;
-      padding: 10px;
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.2);
-      border-radius: 12px;
-      color: #ef4444;
-      font-weight: 600;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: center;
-    }
-
-    .quick-withdraw-btn:hover {
-      background: rgba(239, 68, 68, 0.2);
-    }
-
-    .withdraw-btn {
-      
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      border: none;
-      color: white;
-      padding: 16px;
-      border-radius: 18px;
-      font-weight: 800;
-      font-size: 16px;
-      width: 100%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: all 0.2s;
-    }
-
-    .withdraw-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
-    }
-
-    .withdraw-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* ========== قسم التحويل ========== */
-    .exchange-section {
-      background: linear-gradient(145deg, #1e293b, #0f172a);
-      border-radius: 25px;
-      padding: 20px;
-      margin-bottom: 20px;
-      border: 1px solid rgba(251, 191, 36, 0.1);
-    }
-
-    .exchange-tabs {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      display: flex;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    .exchange-tab {
-      flex: 1;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-weight: 600;
-      font-size: 13px;
-    }
-
-    .exchange-tab.active {
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      color: #0f172a;
-      border-color: transparent;
-    }
-
-    .exchange-form {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      display: none;
-    }
-
-    .exchange-form.active {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      display: block;
-    }
-
-    .exchange-row {
-      
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .exchange-from, .exchange-to {
-      flex: 1;
-    }
-
-    .exchange-label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 13px;
-      color: #94a3b8;
-    }
-
-    .exchange-input-wrapper {
-      display: flex;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 15px;
-      padding: 5px 15px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .exchange-input-wrapper i {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      color: #fbbf24;
-      margin-left: 10px;
-    }
-
-    .exchange-input-wrapper input {
-      flex: 1;
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      background: transparent;
-      border: none;
-      padding: 14px 0;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
-      outline: none;
-      direction: rtl;
-    }
-
-    .exchange-arrow {
-      color: #fbbf24;
-      font-size: 20px;
-    }
-
-    .rate-info {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      background: rgba(251, 191, 36, 0.08);
-      border-radius: 15px;
-      padding: 12px 15px;
-      margin-bottom: 20px;
-      font-size: 13px;
-      border-right: 3px solid #fbbf24;
-    }
-
-    .exchange-btn {
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      border: none;
-      color: #0f172a;
-      padding: 16px;
-      border-radius: 18px;
-      font-weight: 800;
-      font-size: 16px;
-      width: 100%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: all 0.2s;
-    }
-
-    /* ========== أسعار الصرف ========== */
-    .rates-section {
-      background: linear-gradient(145deg, #1e293b, #0f172a);
-      border-radius: 25px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .rates-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .rate-item {
-      text-align: center;
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 15px;
-    }
-
-    .rate-item .from {
-      color: #34d399;
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      font-weight: 700;
-    }
-
-    .rate-item .to {
-      color: #94a3b8;
-      font-size: 13px;
-      margin: 5px 0;
-    }
-
-    .rate-item .value {
-      font-weight: 800;
-      font-size: 18px;
-    }
-
-    .rate-item .value.gold { color: #fbbf24; }
-    .rate-item .value.elixir { color: #a78bfa; }
-    .rate-item .value.oil { color: #2dd4bf; }
-
-    .fee-warning {
-      margin-top: 15px;
-      padding: 10px;
-      background: rgba(239, 68, 68, 0.1);
-      border-radius: 12px;
-      color: #ef4444;
-      font-size: 12px;
-      text-align: center;
-      border: 1px dashed #ef4444;
-    }
-
-    /* ========== سجل العمليات ========== */
-    .history-section {
-      background: linear-gradient(145deg, #1e293b, #0f172a);
-      border-radius: 25px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .history-header {
-      
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 15px;
-    }
-
-    .history-tabs {
-      display: flex;
-      gap: 8px;
-    }
-
-    .history-tab {
-      padding: 6px 12px;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 20px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .history-tab.active {
-      background: #fbbf24;
-      color: #0f172a;
-    }
-
-    .history-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .history-item:last-child {
-      border-bottom: none;
-    }
-
-    .history-icon {
-      width: 45px;
-      height: 45px;
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .history-icon.buy { background: rgba(52, 211, 153, 0.15); color: #34d399; }
-    .history-icon.sell { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-    .history-icon.withdraw { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-
-    .history-details {
-      flex: 1;
-    }
-
-    .history-title {
-      font-weight: 600;
-      margin-bottom: 3px;
-    }
-
-    .history-time {
-      font-size: 11px;
-      color: #64748b;
-    }
-
-    .history-amounts {
-      text-align: left;
-    }
-
-    .history-from {
-      color: #ef4444;
-      font-weight: 600;
-    }
-
-    .history-to {
-      color: #34d399;
-      font-weight: 600;
-    }
-
-    .empty-history {
-      text-align: center;
-      padding: 30px;
-      color: #64748b;
-    }
-
-    /* ========== نافذة تأكيد السحب ========== */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(8px);
-      z-index: 4000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-sheet {
-      background: #1e293b;
-      width: 100%;
-      max-width: 380px;
-      border-radius: 30px;
-      padding: 25px 20px;
-      margin: 20px;
-    }
-
-    .modal-header {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-    }
-
-    .modal-header h3 {
-      font-size: 20px;
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      font-weight: 800;
-    }
-
-    .close-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      color: white;
-    }
-
-    .withdraw-summary {
-      background: rgba(239, 68, 68, 0.1);
-      border-radius: 20px;
-      padding: 25px;
-      margin-bottom: 25px;
-      text-align: center;
-    }
-
-    .withdraw-summary .amount {
-      font-size: 42px;
-      font-weight: 800;
-      color: #ef4444;
-    }
-
-    .withdraw-summary .label {
-      color: #94a3b8;
-      font-size: 14px;
-      margin-top: 5px;
-    }
-
-    .btn-confirm-withdraw {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      color: white;
-      border: none;
-      padding: 16px;
-      border-radius: 18px;
-      font-weight: 800;
-      font-size: 16px;
-      width: 100%;
-      cursor: pointer;
-    }
-
-    .btn-cancel {
-      margin-top: 8px; background: linear-gradient(145deg, #f8fafc, #e2e8f0) !important; border: none !important; box-shadow: inset 2px 2px 5px #ffffff, inset -2px -2px 5px #94a3b8, 3px 3px 8px rgba(0,0,0,0.1), -1px -1px 4px rgba(255,255,255,0.6) !important; border-radius: 30px !important; padding: 2px 2px 2px 10px !important; display: flex; align-items: center; color: #0284c7 !important; font-weight: bold !important;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 18px;
-      font-weight: 600;
-      font-size: 14px;
-      width: 100%;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    /* ========== إشعار ========== */
-    #toastMsg {
-      position: fixed;
-      bottom: 30px;
-      left: 20px;
-      right: 20px;
-      background: #1e293b;
-      color: white;
-      padding: 14px 20px;
-      border-radius: 50px;
-      text-align: center;
-      z-index: 5000;
-      opacity: 0;
-      transition: 0.25s;
-      pointer-events: none;
-      max-width: 400px;
-      margin: 0 auto;
-      font-weight: 600;
-    }
-
-    #toastMsg.show {
-      opacity: 1;
-      bottom: 40px;
-    }
-
-    .loading-spinner {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 50px;
-    }
-
-    .loading-spinner i {
-      font-size: 35px;
-      color: #fbbf24;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI','Tajawal',sans-serif}
+    body{background:linear-gradient(145deg,#f5f7fa,#e8eef5);min-height:100vh;color:#0f172a;overflow-x:hidden;width:100%;max-width:100vw;-webkit-tap-highlight-color:transparent;padding-bottom:40px;padding-top:70px}
+    .header{position:fixed;top:0;left:0;right:0;z-index:999;background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:0 0 25px 25px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+    .header h2{font-size:19px;font-weight:800;display:flex;align-items:center;gap:8px}
+    .header h2 i{color:#fbbf24}
+    .back-btn{cursor:pointer;color:#64748b;font-size:20px}
+    .container{padding:12px;max-width:550px;margin:0 auto}
+    
+    .balance-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+    .bal-card{background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:22px;padding:16px 12px;text-align:center}
+    .bal-card.gold{border-bottom:3px solid #fbbf24}
+    .bal-card.elixir{border-bottom:3px solid #a78bfa}
+    .bal-card.money{border-bottom:3px solid #10b981}
+    .bal-card.oil{border-bottom:3px solid #2dd4bf}
+    .bal-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:20px}
+    .gold .bal-icon{background:rgba(251,191,36,.15);color:#fbbf24}
+    .elixir .bal-icon{background:rgba(167,139,250,.15);color:#a78bfa}
+    .money .bal-icon{background:rgba(16,185,129,.15);color:#10b981}
+    .oil .bal-icon{background:rgba(45,212,191,.15);color:#2dd4bf}
+    .bal-value{font-size:22px;font-weight:800;margin-bottom:2px}
+    .bal-label{font-size:11px;color:#64748b}
+
+    .section-card{background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:22px;padding:18px;margin-bottom:14px}
+    .section-card h3{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .section-card label{display:block;margin:8px 0 4px;font-weight:600;font-size:13px}
+    .section-card input,.section-card select{width:100%;padding:12px;border-radius:14px;border:2px solid #e2e8f0;background:#fff;font-size:14px;margin-bottom:6px}
+    
+    .btn{width:100%;padding:14px;border:none;border-radius:18px;font-weight:800;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;transition:.2s}
+    .btn-red{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
+    .btn-gold{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .btn-sm{width:auto;flex:1;padding:10px 8px;font-size:12px}
+
+    .quick-amounts{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}
+    .quick-amt{padding:8px 14px;border-radius:20px;background:#f1f5f9;font-weight:600;font-size:12px;cursor:pointer;border:2px solid transparent}
+    .quick-amt:hover{border-color:#fbbf24;background:#fef3c7}
+
+    .rate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+    .rate-item{background:rgba(255,255,255,.5);border-radius:14px;padding:10px;text-align:center;font-size:12px}
+    .rate-item strong{display:block;font-size:16px;margin:4px 0}
+
+    .tab-row{display:flex;gap:8px;margin-bottom:12px}
+    .tab{flex:1;padding:10px;border-radius:20px;text-align:center;font-weight:700;font-size:13px;cursor:pointer;background:#f1f5f9;color:#64748b;border:none;transition:.2s}
+    .tab.active{background:#0f172a;color:#fbbf24}
+
+    .preview-box{text-align:center;padding:12px;background:#fef3c7;border-radius:14px;margin:8px 0;font-weight:700;font-size:14px}
+
+    .agent-card{background:#fff;border-radius:16px;padding:14px;margin:8px 0;display:flex;align-items:center;gap:12px;cursor:pointer;border:2px solid transparent;transition:.2s}
+    .agent-card:hover{border-color:#fbbf24}
+    .agent-card.selected{border-color:#10b981;background:#f0fdf4}
+    .agent-avatar{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;border:2px solid #fbbf24;flex-shrink:0}
+    .agent-avatar img{width:100%;height:100%;object-fit:cover}
+
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);z-index:3000;display:none;align-items:center;justify-content:center;padding:16px}
+    .modal.show{display:flex}
+    .modal-box{background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:24px;padding:18px 14px;width:100%;max-width:430px;max-height:80vh;overflow-y:auto;position:relative}
+    .modal-box h3{margin-bottom:12px;font-size:17px;font-weight:800;text-align:center}
+    .close-btn{position:absolute;top:8px;left:10px;background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8}
+
+    .history-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #e2e8f0;font-size:13px}
+    .history-item:last-child{border-bottom:none}
+    .hist-icon{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .hist-icon.buy{background:rgba(16,185,129,.15);color:#10b981}
+    .hist-icon.sell{background:rgba(239,68,68,.15);color:#ef4444}
+    .hist-icon.withdraw{background:rgba(239,68,68,.15);color:#ef4444}
+    .hist-icon.pending{background:rgba(251,191,36,.15);color:#f59e0b}
+    .hist-icon.accepted{background:rgba(16,185,129,.15);color:#10b981}
+    .hist-icon.rejected{background:rgba(239,68,68,.15);color:#ef4444}
+
+    .status-tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700}
+    .status-tag.pending{background:#fef3c7;color:#92400e}
+    .status-tag.accepted{background:#d1fae5;color:#065f46}
+    .status-tag.rejected{background:#fee2e2;color:#991b1b}
+
+    #toast{position:fixed;bottom:20px;left:16px;right:16px;text-align:center;background:#1e293b;color:#fff;padding:12px 18px;border-radius:25px;z-index:5000;opacity:0;transition:.3s;pointer-events:none;max-width:340px;margin:0 auto;font-weight:600;font-size:13px}
+    #toast.show{opacity:1;bottom:28px}
   </style>
 </head>
 <body>
 
-<div class="wallet-header">
-  <div class="back-btn" onclick="goBack()">
-    <i class="fas fa-arrow-right"></i>
-  </div>
+<div class="header">
+  <div class="back-btn" onclick="history.back()"><i class="fas fa-arrow-right"></i></div>
   <h2><i class="fas fa-wallet"></i> المحفظة</h2>
-  <div style="width: 24px;"></div>
+  <div style="width:24px"></div>
 </div>
 
-<div class="balances-container" id="walletContainer">
-  <div class="loading-spinner"><i class="fas fa-spinner"></i></div>
+<div class="container" id="mainContainer">
+  <div style="text-align:center;padding:40px;color:#94a3b8"><i class="fas fa-spinner fa-pulse" style="font-size:30px"></i></div>
 </div>
 
 <!-- نافذة تأكيد السحب -->
-<div class="modal-overlay" id="withdrawConfirmModal">
-  <div class="modal-sheet">
-    <div class="modal-header">
-      <h3><i class="fas fa-hand-holding-usd"></i> تأكيد السحب</h3>
-      <button class="close-btn" onclick="closeWithdrawModal()">&times;</button>
-    </div>
-    
-    <div class="withdraw-summary">
-      <div class="amount" id="withdrawAmountDisplay">0</div>
-      <div class="label">عملة TMX</div>
-    </div>
-    
-    <p style="color: #94a3b8; text-align: center; margin-bottom: 20px; font-size: 14px;">
-      سيتم خصم المبلغ من رصيدك مباشرة
-    </p>
-    
-    <button class="btn-confirm-withdraw" onclick="confirmWithdraw()">
-      <i class="fas fa-check"></i> تأكيد السحب
-    </button>
-    <button class="btn-cancel" onclick="closeWithdrawModal()">
-      <i class="fas fa-times"></i> إلغاء
-    </button>
+<div class="modal" id="withdrawModal"><div class="modal-box" style="position:relative">
+  <button class="close-btn" onclick="closeWithdraw()">&times;</button>
+  <h3>💵 تأكيد السحب</h3>
+  <div style="text-align:center;padding:20px;background:#fef2f2;border-radius:16px;margin-bottom:12px">
+    <div style="font-size:36px;font-weight:800;color:#ef4444" id="wdAmount">0</div>
+    <div style="color:#64748b">TMX</div>
   </div>
-</div>
+  <p style="color:#64748b;text-align:center;margin-bottom:8px;font-size:13px">طريقة الاستلام: <strong id="wdMethod"></strong></p>
+  <p style="color:#64748b;text-align:center;margin-bottom:8px;font-size:13px">الوكيل: <strong id="wdAgent"></strong></p>
+  <button class="btn btn-red" onclick="confirmWithdraw()"><i class="fas fa-check"></i> تأكيد السحب</button>
+  <button class="btn" style="background:#f1f5f9;color:#64748b" onclick="closeWithdraw()">إلغاء</button>
+</div></div>
 
-<div id="toastMsg"></div>
+<!-- نافذة الوكلاء -->
+<div class="modal" id="agentModal"><div class="modal-box" style="position:relative">
+  <button class="close-btn" onclick="closeAgents()">&times;</button>
+  <h3>🤝 اختر وكيل</h3>
+  <div id="agentsList"></div>
+  <button class="btn btn-gold" onclick="selectAgent()">تأكيد الاختيار</button>
+</div></div>
+
+<div id="toast"></div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-  import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, orderBy, onSnapshot, addDoc, increment, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, where, addDoc, increment, getDocs } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
-  const firebaseConfig = {
-  apiKey: "AIzaSyCPBrZMo6IYCwCDYV3HEfNcUmLUITR6VRc",
-  authDomain: "elahbes.firebaseapp.com",
-  projectId: "elahbes",
-  storageBucket: "elahbes.firebasestorage.app",
-  messagingSenderId: "800207969145",
-  appId: "1:800207969145:web:aa19b725d1c92dd48fada8",
-  measurementId: "G-EFT566SJMP"
+const fc={apiKey:"AIzaSyCPBrZMo6IYCwCDYV3HEfNcUmLUITR6VRc",authDomain:"elahbes.firebaseapp.com",projectId:"elahbes",storageBucket:"elahbes.firebasestorage.app",messagingSenderId:"800207969145",appId:"1:800207969145:web:aa19b725d1c92dd48fada8",measurementId:"G-EFT566SJMP"};
+const app=initializeApp(fc),auth=getAuth(app),db=getFirestore(app);
+
+const RATES={gold:2500,elixir:5000,oil:1000};
+const SELL_FEE=0.5;
+const MIN_WITHDRAW=500;
+
+let me=null,myData=null,resources={gold:0,elixir:0,money:0,oil:0};
+let transactions=[],withdrawRequests=[];
+let pendingAmount=0,selectedMethod='',selectedAgent=null,agents=[];
+let exchangeMode='buy';
+
+function toast(m,ok){ok=ok!==false;var t=document.getElementById('toast');t.textContent=m;t.style.background=ok?'#10b981':'#ef4444';t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2500)}
+function fNum(n){return(n||0).toLocaleString('ar-SA')}
+
+async function loadData(uid){
+  var rd=await getDoc(doc(db,"resources",uid));
+  resources=rd.exists()?rd.data():{gold:10,elixir:10,money:10000,oil:10};
+  if(!rd.exists())await setDoc(doc(db,"resources",uid),resources);
+  
+  var wd=await getDoc(doc(db,"wallets",uid));
+  transactions=wd.exists()?wd.data().transactions||[]:[];
+  
+  var ud=await getDoc(doc(db,"users",uid));
+  myData=ud.exists()?ud.data():{username:'مستخدم',emoji:'😎',userId:uid.slice(0,6),email:''};
+  myData.uid=uid;
+  
+  // تحميل طلبات السحب الخاصة بهذا المستخدم
+  var wq=await getDocs(query(collection(db,"withdraw_requests"),where("uid","==",uid)));
+  withdrawRequests=[];
+  wq.forEach(function(d){withdrawRequests.push({id:d.id,...d.data()})});
+  withdrawRequests.sort(function(a,b){return(b.createdAt||0)-(a.createdAt||0)});
+  
+  // تحميل الوكلاء
+  for(var e of['w1@1.com','w2@2.com','w3@3.com']){
+    var q=await getDocs(query(collection(db,"users"),where("email","==",e)));
+    q.forEach(function(d){agents.push({uid:d.id,...d.data()})});
+  }
+  
+  renderMain();
+}
+
+function renderMain(){
+  var c=document.getElementById('mainContainer');
+  var html='';
+  
+  // بطاقات الأرصدة
+  html+='<div class="balance-cards">'+
+    '<div class="bal-card money"><div class="bal-icon"><i class="fas fa-coins"></i></div><div class="bal-value">'+fNum(resources.money)+'</div><div class="bal-label">💰 TMX</div></div>'+
+    '<div class="bal-card gold"><div class="bal-icon"><i class="fas fa-gem"></i></div><div class="bal-value">'+fNum(resources.gold)+'</div><div class="bal-label">🪙 ذهب</div></div>'+
+    '<div class="bal-card elixir"><div class="bal-icon"><i class="fas fa-flask"></i></div><div class="bal-value">'+fNum(resources.elixir)+'</div><div class="bal-label">🧪 إكسير</div></div>'+
+    '<div class="bal-card oil"><div class="bal-icon"><i class="fas fa-oil-can"></i></div><div class="bal-value">'+fNum(resources.oil)+'</div><div class="bal-label">🛢️ نفط</div></div>'+
+    '</div>';
+  
+  // أسعار الصرف
+  html+='<div class="section-card"><h3><i class="fas fa-chart-line"></i> أسعار الصرف</h3>'+
+    '<div class="rate-grid">'+
+    '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.gold)+'</strong>🪙 ذهب</div>'+
+    '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.elixir)+'</strong>🧪 إكسير</div>'+
+    '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.oil)+'</strong>🛢️ نفط</div>'+
+    '</div>'+
+    '<div style="text-align:center;color:#ef4444;font-size:11px;margin-top:6px">⚠️ البيع يستقطع 50% رسوم</div></div>';
+  
+  // تبويبات شراء/بيع
+  html+='<div class="section-card"><div class="tab-row">'+
+    '<button class="tab '+(exchangeMode==='buy'?'active':'')+'" onclick="switchMode(\'buy\')"><i class="fas fa-cart-plus"></i> شراء</button>'+
+    '<button class="tab '+(exchangeMode==='sell'?'active':'')+'" onclick="switchMode(\'sell\')"><i class="fas fa-cart-arrow-down"></i> بيع</button>'+
+    '</div>';
+  
+  if(exchangeMode==='buy'){
+    html+='<label>المبلغ (TMX)</label><input type="number" id="buyAmt" placeholder="المبلغ" min="1" oninput="updateBuy()">'+
+      '<div class="preview-box" id="buyPreview">أدخل مبلغاً لرؤية المعادل</div>'+
+      '<div style="display:flex;gap:8px;margin-top:8px">'+
+      '<button class="btn btn-gold btn-sm" onclick="execBuy(\'gold\')"><i class="fas fa-gem"></i> شراء ذهب</button>'+
+      '<button class="btn btn-gold btn-sm" onclick="execBuy(\'elixir\')"><i class="fas fa-flask"></i> شراء إكسير</button>'+
+      '<button class="btn btn-gold btn-sm" onclick="execBuy(\'oil\')"><i class="fas fa-oil-can"></i> شراء نفط</button></div>';
+  } else {
+    html+='<label>اختر العملة للبيع</label>'+
+      '<div style="display:flex;gap:8px;margin-bottom:8px">'+
+      '<button class="btn btn-gold btn-sm" id="sellGoldBtn" onclick="selectSell(\'gold\')"><i class="fas fa-gem"></i> ذهب</button>'+
+      '<button class="btn btn-gold btn-sm" id="sellElixirBtn" onclick="selectSell(\'elixir\')"><i class="fas fa-flask"></i> إكسير</button>'+
+      '<button class="btn btn-gold btn-sm" id="sellOilBtn" onclick="selectSell(\'oil\')"><i class="fas fa-oil-can"></i> نفط</button></div>'+
+      '<input type="hidden" id="sellType" value="gold">'+
+      '<label>الكمية للبيع</label><input type="number" id="sellAmt" placeholder="الكمية" min="1" oninput="updateSell()">'+
+      '<div style="font-size:11px;color:#64748b">المتاح: <span id="sellAvail">0</span></div>'+
+      '<div class="preview-box" id="sellPreview">أدخل كمية لرؤية العائد</div>'+
+      '<button class="btn btn-red" onclick="execSell()"><i class="fas fa-cart-arrow-down"></i> بيع</button>';
+  }
+  html+='</div>';
+  
+  // قسم السحب
+  html+='<div class="section-card"><h3><i class="fas fa-hand-holding-usd"></i> سحب الأموال</h3>'+
+    '<p style="font-size:12px;color:#ef4444;margin-bottom:8px">الحد الأدنى: '+fNum(MIN_WITHDRAW)+' TMX</p>'+
+    '<div class="quick-amounts">'+
+    '<span class="quick-amt" onclick="setAmt(500)">500</span><span class="quick-amt" onclick="setAmt(1000)">1,000</span>'+
+    '<span class="quick-amt" onclick="setAmt(5000)">5,000</span><span class="quick-amt" onclick="setAmt(10000)">10,000</span></div>'+
+    '<label>المبلغ</label><input type="number" id="wdAmt" placeholder="أدخل المبلغ" min="'+MIN_WITHDRAW+'">'+
+    '<label>طريقة الاستلام</label><select id="wdMethodSel" onchange="onMethodChange()">'+
+    '<option value="">اختر...</option><option value="zain">زين كاش</option><option value="master">ماستر كارد</option><option value="agent">استلام من وكيل</option></select>'+
+    '<div id="agentInfo" style="display:none;margin:6px 0;padding:10px;background:#fef3c7;border-radius:12px;cursor:pointer" onclick="openAgents()">'+
+    '<span id="agentName">اختر وكيل...</span></div>'+
+    '<button class="btn btn-red" id="wdBtn" onclick="openWithdraw()" disabled>سحب</button></div>';
+  
+  // سجل العمليات (شراء/بيع + طلبات السحب)
+  var allHistory=[];
+  // عمليات الشراء والبيع
+  transactions.forEach(function(t){
+    allHistory.push({type:t.type,data:t,timestamp:t.createdAt});
+  });
+  // طلبات السحب
+  withdrawRequests.forEach(function(r){
+    allHistory.push({type:'withdraw_req',data:r,timestamp:r.createdAt});
+  });
+  allHistory.sort(function(a,b){return(b.timestamp||0)-(a.timestamp||0)});
+  
+  if(allHistory.length>0){
+    html+='<div class="section-card"><h3><i class="fas fa-history"></i> سجل العمليات</h3>';
+    allHistory.slice(0,20).forEach(function(item){
+      if(item.type==='buy'||item.type==='sell'){
+        var t=item.data;
+        var isBuy=t.type==='buy';
+        html+='<div class="history-item">'+
+          '<div class="hist-icon '+(isBuy?'buy':'sell')+'"><i class="fas fa-'+(isBuy?'cart-plus':'cart-arrow-down')+'"></i></div>'+
+          '<div style="flex:1"><strong>'+(isBuy?'شراء':'بيع')+'</strong> '+(t.resourceName||'')+
+          '<br><small style="color:#94a3b8">'+new Date(t.createdAt).toLocaleString('ar-SA')+'</small></div>'+
+          '<div style="text-align:left">'+
+          '<span style="color:#ef4444">-'+fNum(t.spent)+' '+(t.spentCurrency||'')+'</span><br>'+
+          '<span style="color:#10b981">+'+fNum(t.received)+' '+(t.receivedCurrency||'')+'</span></div></div>';
+      } else if(item.type==='withdraw_req'){
+        var r=item.data;
+        var statusClass=r.status||'pending';
+        var statusIcon=r.status==='accepted'?'check-circle':r.status==='rejected'?'times-circle':'clock';
+        var statusText=r.status==='accepted'?'مقبول':r.status==='rejected'?'مرفوض':'معلق';
+        var methodText=r.method==='zain'?'زين كاش':r.method==='master'?'ماستر كارد':'وكيل: '+(r.agentName||'?');
+        html+='<div class="history-item">'+
+          '<div class="hist-icon '+(r.status||'pending')+'"><i class="fas fa-'+statusIcon+'"></i></div>'+
+          '<div style="flex:1"><strong>طلب سحب</strong> <span class="status-tag '+statusClass+'">'+statusText+'</span>'+
+          '<br><small style="color:#94a3b8">'+new Date(r.createdAt).toLocaleString('ar-SA')+' | '+methodText+'</small>'+
+          (r.reason?'<br><small style="color:#ef4444">سبب الرفض: '+r.reason+'</small>':'')+'</div>'+
+          '<div style="text-align:left"><span style="color:#ef4444;font-weight:700">-'+fNum(r.amount)+' TMX</span></div></div>';
+      }
+    });
+    html+='</div>';
+  }
+  
+  c.innerHTML=html;
+  updateWdBtn();
+}
+
+// ========== التبويب ==========
+window.switchMode=function(m){exchangeMode=m;renderMain()};
+
+// ========== شراء ==========
+window.updateBuy=function(){var a=+document.getElementById('buyAmt').value||0;document.getElementById('buyPreview').innerHTML=a>0?'💰 '+a+' TMX =<br>🪙 '+fNum(a*RATES.gold)+' ذهب | 🧪 '+fNum(a*RATES.elixir)+' إكسير | 🛢️ '+fNum(a*RATES.oil)+' نفط':'أدخل مبلغاً لرؤية المعادل'};
+window.execBuy=async function(type){
+  var amt=+document.getElementById('buyAmt').value||0;
+  if(amt<1)return toast('أدخل مبلغاً',false);
+  if(resources.money<amt)return toast('رصيد غير كاف',false);
+  var received=amt*RATES[type];
+  var names={gold:'ذهب',elixir:'إكسير',oil:'نفط'};
+  try{
+    var upd={money:increment(-amt)};upd[type]=increment(received);
+    await updateDoc(doc(db,"resources",me.uid),upd);
+    resources.money-=amt;resources[type]=(resources[type]||0)+received;
+    var tx={type:'buy',spent:amt,spentCurrency:'TMX',received:received,receivedCurrency:names[type],resourceName:names[type],createdAt:Date.now()};
+    transactions.push(tx);
+    var wd=await getDoc(doc(db,"wallets",me.uid));
+    var ts=wd.exists()?wd.data().transactions||[]:[];
+    ts.push(tx);await setDoc(doc(db,"wallets",me.uid),{transactions:ts},{merge:true});
+    renderMain();toast('✅ تم شراء '+fNum(received)+' '+names[type]);
+  }catch(e){toast('❌ فشل',false)}
 };
 
-  const MIN_WITHDRAW = 500;
-  
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+// ========== بيع ==========
+window.selectSell=function(type){
+  document.getElementById('sellType').value=type;
+  document.getElementById('sellAvail').textContent=fNum(resources[type]||0);
+  document.querySelectorAll('#sellGoldBtn,#sellElixirBtn,#sellOilBtn').forEach(function(b){b.style.background='';b.style.color=''});
+  event.target.style.background='#0f172a';event.target.style.color='#fbbf24';
+  updateSell();
+};
+window.updateSell=function(){
+  var type=document.getElementById('sellType').value;
+  var amt=+document.getElementById('sellAmt').value||0;
+  document.getElementById('sellAvail').textContent=fNum(resources[type]||0);
+  if(amt>0){
+    var rate=RATES[type]||1;
+    var received=Math.floor((amt/rate)*SELL_FEE);
+    document.getElementById('sellPreview').innerHTML='بيع '+fNum(amt)+' '+{gold:'ذهب',elixir:'إكسير',oil:'نفط'}[type]+' = <strong>'+fNum(received)+' TMX</strong> (بعد خصم 50%)';
+  } else {document.getElementById('sellPreview').innerHTML='أدخل كمية لرؤية العائد'}
+};
+window.execSell=async function(){
+  var type=document.getElementById('sellType').value;
+  var amt=+document.getElementById('sellAmt').value||0;
+  if(amt<1)return toast('أدخل كمية',false);
+  if((resources[type]||0)<amt)return toast('رصيد غير كاف',false);
+  var rate=RATES[type]||1;
+  var received=Math.floor((amt/rate)*SELL_FEE);
+  var names={gold:'ذهب',elixir:'إكسير',oil:'نفط'};
+  try{
+    var upd={};upd[type]=increment(-amt);upd.money=increment(received);
+    await updateDoc(doc(db,"resources",me.uid),upd);
+    resources[type]-=amt;resources.money+=received;
+    var tx={type:'sell',spent:amt,spentCurrency:names[type],received:received,receivedCurrency:'TMX',resourceName:names[type],createdAt:Date.now()};
+    transactions.push(tx);
+    var wd=await getDoc(doc(db,"wallets",me.uid));
+    var ts=wd.exists()?wd.data().transactions||[]:[];
+    ts.push(tx);await setDoc(doc(db,"wallets",me.uid),{transactions:ts},{merge:true});
+    renderMain();toast('✅ تم بيع '+fNum(amt)+' '+names[type]+' مقابل '+fNum(received)+' TMX');
+  }catch(e){toast('❌ فشل',false)}
+};
 
-  const EXCHANGE_RATES = {
-    toGold: { rate: 2, name: 'ذهب', icon: 'fa-coins', color: '#fbbf24' },
-    toElixir: { rate: 3, name: 'إكسير', icon: 'fa-flask', color: '#a78bfa' },
-    toOil: { rate: 1.4, name: 'نفط', icon: 'fa-oil-can', color: '#2dd4bf' }
-  };
-
-  const SELL_FEE = 0.5;
-
-  let currentUser = null;
-  let currentUserData = null;
-  let resources = { gold: 0, elixir: 0, money: 0, oil: 0 };
-  let transactions = [];
-  let currentTab = 'buy';
-  let historyFilter = 'all';
-  let pendingWithdrawAmount = 0;
-
-  function showToast(msg, isSuccess = true) {
-    const t = document.getElementById('toastMsg');
-    if (!t) return;
-    t.textContent = msg;
-    t.style.background = isSuccess ? '#10b981' : '#ef4444';
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
-  }
-
-  // تعديل دالة الرجوع - بدون توجيه لصفحة 404
-  window.goBack = function() {
-    // محاولة الرجوع للصفحة السابقة في المتصفح
-    if (document.referrer && document.referrer.includes(window.location.hostname)) {
-      window.history.back();
-    } else {
-      // إذا لم توجد صفحة سابقة، عرض رسالة
-      showToast('لا توجد صفحة سابقة للرجوع إليها');
-    }
-  };
-
-  function formatNumber(num) {
-    return num?.toLocaleString('ar-SA') || '0';
-  }
-
-  async function loadUserData(uid) {
-    try {
-      const resourcesDoc = await getDoc(doc(db, "resources", uid));
-      if (resourcesDoc.exists()) {
-        resources = resourcesDoc.data();
-      } else {
-        resources = { gold: 10, elixir: 10, money: 10000, oil: 10 };
-        await setDoc(doc(db, "resources", uid), resources);
-      }
-      
-      const walletDoc = await getDoc(doc(db, "wallets", uid));
-      if (walletDoc.exists()) {
-        transactions = walletDoc.data().transactions || [];
-      }
-      
-      renderWallet();
-    } catch (error) {
-      console.error("خطأ في تحميل البيانات:", error);
-    }
-  }
-
-  function calculateBuyAmount(moneyAmount, resourceType) {
-    return moneyAmount * (EXCHANGE_RATES[resourceType]?.rate || 1);
-  }
-
-  function calculateSellAmount(resourceAmount, resourceType) {
-    const rate = EXCHANGE_RATES[resourceType]?.rate || 1;
-    const moneyValue = resourceAmount / rate;
-    return Math.floor(moneyValue * SELL_FEE);
-  }
-
-  function renderWallet() {
-    const container = document.getElementById('walletContainer');
-    if (!container) return;
-    
-    const filteredTransactions = transactions.filter(t => {
-      if (historyFilter === 'all') return true;
-      return t.type === historyFilter;
-    });
-    
-    container.innerHTML = `
-      <!-- بطاقات الأرصدة -->
-      <div class="balance-cards">
-        <div class="balance-card gold">
-          <div class="card-icon"><i class="fas fa-coins"></i></div>
-          <div class="card-value">${formatNumber(resources.gold || 0)}</div>
-          <div class="card-label">ذهب</div>
-        </div>
-        <div class="balance-card elixir">
-          <div class="card-icon"><i class="fas fa-flask"></i></div>
-          <div class="card-value">${formatNumber(resources.elixir || 0)}</div>
-          <div class="card-label">إكسير</div>
-        </div>
-        <div class="balance-card money">
-          <div class="card-icon"><i class="fas fa-money-bill"></i></div>
-          <div class="card-value">${formatNumber(resources.money || 0)}</div>
-          <div class="card-label">TMX</div>
-        </div>
-        <div class="balance-card oil">
-          <div class="card-icon"><i class="fas fa-oil-can"></i></div>
-          <div class="card-value">${formatNumber(resources.oil || 0)}</div>
-          <div class="card-label">نفط</div>
-        </div>
-      </div>
-      
-      <!-- قسم السحب -->
-      <div class="withdraw-section">
-        <div class="section-title">
-          <i class="fas fa-hand-holding-usd"></i>
-          <span>سحب الأموال</span>
-        </div>
-        
-        <div class="withdraw-info">
-          <p><i class="fas fa-info-circle"></i> الحد الأدنى للسحب: ${formatNumber(MIN_WITHDRAW)} عملة TMX</p>
-          <p><i class="fas fa-check-circle"></i> سيتم خصم المبلغ من رصيدك مباشرة</p>
-          <p><i class="fas fa-shield-alt"></i> معاملات آمنة ومشفرة</p>
-        </div>
-        
-        <div class="quick-withdraw">
-          <div class="quick-withdraw-btn" onclick="setWithdrawAmount(500)">500</div>
-          <div class="quick-withdraw-btn" onclick="setWithdrawAmount(1000)">1,000</div>
-          <div class="quick-withdraw-btn" onclick="setWithdrawAmount(5000)">5,000</div>
-          <div class="quick-withdraw-btn" onclick="setWithdrawAmount(10000)">10,000</div>
-        </div>
-        
-        <div class="withdraw-input-wrapper">
-          <i class="fas fa-money-bill"></i>
-          <input type="number" id="withdrawAmount" placeholder="أدخل المبلغ المراد سحبه" min="${MIN_WITHDRAW}" max="${resources.money || 0}" oninput="updateWithdrawButton()">
-          <span>عملةTMX</span>
-        </div>
-        
-        <button class="withdraw-btn" id="withdrawBtn" onclick="openWithdrawModal()" disabled>
-          <i class="fas fa-hand-holding-usd"></i> سحب
-        </button>
-      </div>
-      
-      <!-- أسعار الصرف -->
-      <div class="rates-section">
-        <div class="section-title" style="color: #fbbf24;">
-          <i class="fas fa-chart-line"></i>
-          <span>أسعار الصرف (شراء)</span>
-        </div>
-        <div class="rates-grid">
-          <div class="rate-item">
-            <div class="from"><i class="fas fa-money-bill"></i> 5 TMX</div>
-            <div class="to">→</div>
-            <div class="value gold"><i class="fas fa-coins"></i> 10 ذهب</div>
-          </div>
-          <div class="rate-item">
-            <div class="from"><i class="fas fa-money-bill"></i> 5 TMX</div>
-            <div class="to">→</div>
-            <div class="value elixir"><i class="fas fa-flask"></i> 15 إكسير</div>
-          </div>
-          <div class="rate-item">
-            <div class="from"><i class="fas fa-money-bill"></i> 5 TMX</div>
-            <div class="to">→</div>
-            <div class="value oil"><i class="fas fa-oil-can"></i> 7 نفط</div>
-          </div>
-        </div>
-        <div class="fee-warning">
-          <i class="fas fa-exclamation-triangle"></i>
-          تنبيه: عند بيع العملات للTMX يتم استقطاع 50% كرسوم تحويل
-        </div>
-      </div>
-      
-      <!-- قسم التحويل -->
-      <div class="exchange-section">
-        <div class="section-title" style="color: #fbbf24;">
-          <i class="fas fa-exchange-alt"></i>
-          <span>تحويل العملات</span>
-        </div>
-        
-        <div class="exchange-tabs">
-          <div class="exchange-tab ${currentTab === 'buy' ? 'active' : ''}" onclick="switchTab('buy')">
-            <i class="fas fa-cart-plus"></i> شراء
-          </div>
-          <div class="exchange-tab ${currentTab === 'sell' ? 'active' : ''}" onclick="switchTab('sell')">
-            <i class="fas fa-cart-arrow-down"></i> بيع
-          </div>
-        </div>
-        
-        <!-- نموذج الشراء -->
-        <div class="exchange-form ${currentTab === 'buy' ? 'active' : ''}" id="buyForm">
-          <div class="exchange-row">
-            <div class="exchange-from">
-              <label class="exchange-label">المبلغ (TMX)</label>
-              <div class="exchange-input-wrapper">
-                <i class="fas fa-money-bill"></i>
-                <input type="number" id="buyMoneyAmount" placeholder="0" min="1" value="5" oninput="updateBuyPreview()">
-              </div>
-            </div>
-          </div>
-          
-          <div class="rate-info" id="buyPreview">
-            <i class="fas fa-info-circle"></i>
-            <span>اختر العملة التي تريد شراءها</span>
-          </div>
-          
-          <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <button class="exchange-tab" style="flex:1;" id="buyGoldBtn" onclick="selectBuyResource('toGold')">
-              <i class="fas fa-coins"></i> ذهب
-            </button>
-            <button class="exchange-tab" style="flex:1;" id="buyElixirBtn" onclick="selectBuyResource('toElixir')">
-              <i class="fas fa-flask"></i> إكسير
-            </button>
-            <button class="exchange-tab" style="flex:1;" id="buyOilBtn" onclick="selectBuyResource('toOil')">
-              <i class="fas fa-oil-can"></i> نفط
-            </button>
-          </div>
-          
-          <input type="hidden" id="selectedBuyResource" value="toGold">
-          
-          <button class="exchange-btn" onclick="executeBuy()">
-            <i class="fas fa-cart-plus"></i> شراء
-          </button>
-        </div>
-        
-        <!-- نموذج البيع -->
-        <div class="exchange-form ${currentTab === 'sell' ? 'active' : ''}" id="sellForm">
-          <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <button class="exchange-tab" style="flex:1;" id="sellGoldBtn" onclick="selectSellResource('gold')">
-              <i class="fas fa-coins"></i> ذهب
-            </button>
-            <button class="exchange-tab" style="flex:1;" id="sellElixirBtn" onclick="selectSellResource('elixir')">
-              <i class="fas fa-flask"></i> إكسير
-            </button>
-            <button class="exchange-tab" style="flex:1;" id="sellOilBtn" onclick="selectSellResource('oil')">
-              <i class="fas fa-oil-can"></i> نفط
-            </button>
-          </div>
-          
-          <input type="hidden" id="selectedSellResource" value="gold">
-          
-          <div class="exchange-row">
-            <div class="exchange-from">
-              <label class="exchange-label" id="sellResourceLabel">الذهب</label>
-              <div class="exchange-input-wrapper">
-                <i class="fas fa-coins" id="sellResourceIcon"></i>
-                <input type="number" id="sellAmount" placeholder="0" min="1" oninput="updateSellPreview()">
-              </div>
-              <small style="color: #64748b; margin-top: 5px; display: block;">
-                المتاح: <span id="availableSellAmount">0</span>
-              </small>
-            </div>
-          </div>
-          
-          <div class="rate-info" id="sellPreview">
-            <i class="fas fa-info-circle"></i>
-            <span>أدخل الكمية للبيع</span>
-          </div>
-          
-          <button class="exchange-btn" onclick="executeSell()">
-            <i class="fas fa-cart-arrow-down"></i> بيع
-          </button>
-        </div>
-      </div>
-      
-      <!-- سجل العمليات -->
-      <div class="history-section">
-        <div class="history-header">
-          <div class="section-title" style="color: #fbbf24;">
-            <i class="fas fa-history"></i>
-            <span>سجل العمليات</span>
-          </div>
-          <div class="history-tabs">
-            <div class="history-tab ${historyFilter === 'all' ? 'active' : ''}" onclick="filterHistory('all')">الكل</div>
-            <div class="history-tab ${historyFilter === 'buy' ? 'active' : ''}" onclick="filterHistory('buy')">شراء</div>
-            <div class="history-tab ${historyFilter === 'sell' ? 'active' : ''}" onclick="filterHistory('sell')">بيع</div>
-            <div class="history-tab ${historyFilter === 'withdraw' ? 'active' : ''}" onclick="filterHistory('withdraw')">سحب</div>
-          </div>
-        </div>
-        
-        ${filteredTransactions.length > 0 ? filteredTransactions.slice(0, 20).map(item => {
-          if (item.type === 'buy' || item.type === 'sell') {
-            return `
-              <div class="history-item">
-                <div class="history-icon ${item.type}">
-                  <i class="fas fa-${item.type === 'buy' ? 'cart-plus' : 'cart-arrow-down'}"></i>
-                </div>
-                <div class="history-details">
-                  <div class="history-title">
-                    ${item.type === 'buy' ? 'شراء' : 'بيع'} ${item.resourceName || ''}
-                  </div>
-                  <div class="history-time">${item.createdAt ? new Date(item.createdAt).toLocaleString('ar-SA') : ''}</div>
-                </div>
-                <div class="history-amounts">
-                  <span class="history-from">-${formatNumber(item.spent)} ${item.spentCurrency}</span>
-                  <span style="color: #64748b;"> → </span>
-                  <span class="history-to">+${formatNumber(item.received)} ${item.receivedCurrency}</span>
-                </div>
-              </div>
-            `;
-          } else if (item.type === 'withdraw') {
-            return `
-              <div class="history-item">
-                <div class="history-icon withdraw">
-                  <i class="fas fa-hand-holding-usd"></i>
-                </div>
-                <div class="history-details">
-                  <div class="history-title">سحب TMX</div>
-                  <div class="history-time">${item.createdAt ? new Date(item.createdAt).toLocaleString('ar-SA') : ''}</div>
-                </div>
-                <div class="history-amounts">
-                  <span class="history-from">-${formatNumber(item.amount)} TMX</span>
-                </div>
-              </div>
-            `;
-          }
-          return '';
-        }).join('') : `
-          <div class="empty-history">
-            <i class="fas fa-exchange-alt" style="font-size: 40px; opacity: 0.3; margin-bottom: 10px;"></i>
-            <p>لا توجد عمليات بعد</p>
-          </div>
-        `}
-      </div>
-    `;
-    
-    updateSellResourceInfo();
-    updateBuyPreview();
-  }
-
-  window.setWithdrawAmount = (amount) => {
-    const input = document.getElementById('withdrawAmount');
-    if (input) {
-      input.value = amount;
-      updateWithdrawButton();
-    }
-  };
-
-  window.updateWithdrawButton = () => {
-    const amount = parseInt(document.getElementById('withdrawAmount')?.value) || 0;
-    const btn = document.getElementById('withdrawBtn');
-    if (btn) {
-      btn.disabled = amount < MIN_WITHDRAW || amount > (resources.money || 0);
-    }
-  };
-
-  window.openWithdrawModal = () => {
-    const amount = parseInt(document.getElementById('withdrawAmount')?.value) || 0;
-    if (amount < MIN_WITHDRAW) {
-      showToast(`الحد الأدنى للسحب ${formatNumber(MIN_WITHDRAW)} عملة`, false);
-      return;
-    }
-    if (amount > (resources.money || 0)) {
-      showToast('رصيدك غير كافٍ', false);
-      return;
-    }
-    
-    pendingWithdrawAmount = amount;
-    document.getElementById('withdrawAmountDisplay').textContent = formatNumber(amount);
-    document.getElementById('withdrawConfirmModal').classList.add('active');
-  };
-
-  window.closeWithdrawModal = () => {
-    document.getElementById('withdrawConfirmModal').classList.remove('active');
-  };
-
-  window.confirmWithdraw = async () => {
-    if (!pendingWithdrawAmount || pendingWithdrawAmount < MIN_WITHDRAW) {
-      showToast('المبلغ غير صالح', false);
-      return;
-    }
-    
-    if (pendingWithdrawAmount > (resources.money || 0)) {
-      showToast('رصيدك غير كافٍ', false);
-      return;
-    }
-    
-    try {
-      await updateDoc(doc(db, "resources", currentUser.uid), {
-        money: increment(-pendingWithdrawAmount)
-      });
-      
-      const transaction = {
-        type: 'withdraw',
-        amount: pendingWithdrawAmount,
-        createdAt: Date.now()
-      };
-      
-      const walletRef = doc(db, "wallets", currentUser.uid);
-      const walletDoc = await getDoc(walletRef);
-      if (walletDoc.exists()) {
-        await updateDoc(walletRef, { transactions: arrayUnion(transaction) });
-      } else {
-        await setDoc(walletRef, { transactions: [transaction] });
-      }
-      
-      resources.money -= pendingWithdrawAmount;
-      transactions.push(transaction);
-      
-      closeWithdrawModal();
-      renderWallet();
-      showToast(`تم سحب ${formatNumber(pendingWithdrawAmount)} عملة TMX`, true);
-      
-    } catch (error) {
-      console.error("خطأ في السحب:", error);
-      showToast('فشل عملية السحب', false);
-    }
-  };
-
-  window.filterHistory = (filter) => {
-    historyFilter = filter;
-    renderWallet();
-  };
-
-  window.switchTab = (tab) => {
-    currentTab = tab;
-    renderWallet();
-  };
-
-  window.selectBuyResource = (resource) => {
-    document.getElementById('selectedBuyResource').value = resource;
-    document.querySelectorAll('#buyGoldBtn, #buyElixirBtn, #buyOilBtn').forEach(btn => {
-      btn.style.background = '';
-      btn.style.color = '';
-    });
-    event.target.style.background = 'linear-gradient(135deg, #fbbf24, #f59e0b)';
-    event.target.style.color = '#0f172a';
-    updateBuyPreview();
-  };
-
-  window.selectSellResource = (resource) => {
-    document.getElementById('selectedSellResource').value = resource;
-    document.querySelectorAll('#sellGoldBtn, #sellElixirBtn, #sellOilBtn').forEach(btn => {
-      btn.style.background = '';
-      btn.style.color = '';
-    });
-    event.target.style.background = 'linear-gradient(135deg, #fbbf24, #f59e0b)';
-    event.target.style.color = '#0f172a';
-    updateSellResourceInfo();
-    updateSellPreview();
-  };
-
-  function updateSellResourceInfo() {
-    const resource = document.getElementById('selectedSellResource')?.value || 'gold';
-    const names = { gold: 'الذهب', elixir: 'الإكسير', oil: 'النفط' };
-    const icons = { gold: 'fa-coins', elixir: 'fa-flask', oil: 'fa-oil-can' };
-    
-    document.getElementById('sellResourceLabel').textContent = names[resource];
-    document.getElementById('sellResourceIcon').className = `fas ${icons[resource]}`;
-    document.getElementById('availableSellAmount').textContent = formatNumber(resources[resource] || 0);
-  }
-
-  window.updateBuyPreview = () => {
-    const moneyAmount = parseFloat(document.getElementById('buyMoneyAmount')?.value) || 0;
-    const resource = document.getElementById('selectedBuyResource')?.value || 'toGold';
-    const resourceNames = { toGold: 'ذهب', toElixir: 'إكسير', toOil: 'نفط' };
-    const received = calculateBuyAmount(moneyAmount, resource);
-    
-    document.getElementById('buyPreview').innerHTML = `
-      <i class="fas fa-info-circle"></i>
-      <span>${moneyAmount} TMX = ${received.toFixed(1)} ${resourceNames[resource]}</span>
-    `;
-  };
-
-  window.updateSellPreview = () => {
-    const amount = parseFloat(document.getElementById('sellAmount')?.value) || 0;
-    const resource = document.getElementById('selectedSellResource')?.value || 'gold';
-    const resourceNames = { gold: 'ذهب', elixir: 'إكسير', oil: 'نفط' };
-    let resourceType = resource === 'gold' ? 'toGold' : resource === 'elixir' ? 'toElixir' : 'toOil';
-    const moneyReceived = calculateSellAmount(amount, resourceType);
-    
-    document.getElementById('sellPreview').innerHTML = `
-      <i class="fas fa-info-circle"></i>
-      <span>${amount} ${resourceNames[resource]} = ${moneyReceived.toFixed(0)} TMX (بعد استقطاع 50%)</span>
-    `;
-  };
-
-  window.executeBuy = async () => {
-    const moneyAmount = parseFloat(document.getElementById('buyMoneyAmount')?.value) || 0;
-    const resource = document.getElementById('selectedBuyResource')?.value || 'toGold';
-    
-    if (moneyAmount <= 0) { showToast('الرجاء إدخال مبلغ صحيح', false); return; }
-    if (resources.money < moneyAmount) { showToast('رصيد المال غير كافٍ', false); return; }
-    
-    const resourceField = resource === 'toGold' ? 'gold' : resource === 'toElixir' ? 'elixir' : 'oil';
-    const resourceName = resource === 'toGold' ? 'ذهب' : resource === 'toElixir' ? 'إكسير' : 'نفط';
-    const received = calculateBuyAmount(moneyAmount, resource);
-    
-    try {
-      const updates = {};
-      updates.money = increment(-moneyAmount);
-      updates[resourceField] = increment(received);
-      
-      await updateDoc(doc(db, "resources", currentUser.uid), updates);
-      
-      const transaction = {
-        type: 'buy',
-        spent: moneyAmount,
-        spentCurrency: 'TMX',
-        received: received,
-        receivedCurrency: resourceName,
-        resourceName: resourceName,
-        createdAt: Date.now()
-      };
-      
-      const walletRef = doc(db, "wallets", currentUser.uid);
-      const walletDoc = await getDoc(walletRef);
-      if (walletDoc.exists()) {
-        await updateDoc(walletRef, { transactions: arrayUnion(transaction) });
-      } else {
-        await setDoc(walletRef, { transactions: [transaction] });
-      }
-      
-      resources.money -= moneyAmount;
-      resources[resourceField] = (resources[resourceField] || 0) + received;
-      transactions.push(transaction);
-      
-      renderWallet();
-      showToast(`تم شراء ${received.toFixed(1)} ${resourceName}`);
-    } catch (e) {
-      showToast('فشلت العملية', false);
-    }
-  };
-
-  window.executeSell = async () => {
-    const amount = parseFloat(document.getElementById('sellAmount')?.value) || 0;
-    const resource = document.getElementById('selectedSellResource')?.value || 'gold';
-    
-    if (amount <= 0) { showToast('الرجاء إدخال كمية صحيحة', false); return; }
-    if ((resources[resource] || 0) < amount) { showToast('رصيد غير كافٍ', false); return; }
-    
-    const resourceType = resource === 'gold' ? 'toGold' : resource === 'elixir' ? 'toElixir' : 'toOil';
-    const resourceName = resource === 'gold' ? 'ذهب' : resource === 'elixir' ? 'إكسير' : 'نفط';
-    const moneyReceived = calculateSellAmount(amount, resourceType);
-    
-    try {
-      const updates = {};
-      updates[resource] = increment(-amount);
-      updates.money = increment(moneyReceived);
-      
-      await updateDoc(doc(db, "resources", currentUser.uid), updates);
-      
-      const transaction = {
-        type: 'sell',
-        spent: amount,
-        spentCurrency: resourceName,
-        received: moneyReceived,
-        receivedCurrency: 'TMX',
-        resourceName: resourceName,
-        createdAt: Date.now()
-      };
-      
-      const walletRef = doc(db, "wallets", currentUser.uid);
-      const walletDoc = await getDoc(walletRef);
-      if (walletDoc.exists()) {
-        await updateDoc(walletRef, { transactions: arrayUnion(transaction) });
-      } else {
-        await setDoc(walletRef, { transactions: [transaction] });
-      }
-      
-      resources[resource] -= amount;
-      resources.money += moneyReceived;
-      transactions.push(transaction);
-      
-      renderWallet();
-      showToast(`تم بيع ${amount} ${resourceName} مقابل ${moneyReceived} TMX`);
-    } catch (e) {
-      showToast('فشلت العملية', false);
-    }
-  };
-
-  // تعديل onAuthStateChanged - بدون توجيه لصفحة 404
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      currentUser = user;
-      currentUserData = (await getDoc(doc(db, "users", user.uid))).data();
-      await loadUserData(user.uid);
-    } else {
-      // عرض رسالة بدلاً من التوجيه لصفحة غير موجودة
-      const container = document.getElementById('walletContainer');
-      if (container) {
-        container.innerHTML = `
-          <div style="text-align:center;padding:50px;color:#94a3b8;">
-            <i class="fas fa-sign-in-alt" style="font-size:50px;opacity:0.3;margin-bottom:20px;"></i>
-            <p>يرجى تسجيل الدخول للوصول إلى المحفظة</p>
-          </div>
-        `;
-      }
-    }
+// ========== سحب ==========
+window.setAmt=function(a){document.getElementById('wdAmt').value=a;updateWdBtn()};
+window.updateWdBtn=function(){
+  var a=+document.getElementById('wdAmt').value||0;
+  var m=document.getElementById('wdMethodSel').value;
+  var btn=document.getElementById('wdBtn');
+  if(btn)btn.disabled=a<MIN_WITHDRAW||a>resources.money||!m;
+};
+window.onMethodChange=function(){
+  document.getElementById('agentInfo').style.display=document.getElementById('wdMethodSel').value==='agent'?'block':'none';
+  updateWdBtn();
+};
+window.openAgents=function(){document.getElementById('agentModal').classList.add('show');renderAgents()};
+window.closeAgents=function(){document.getElementById('agentModal').classList.remove('show')};
+function renderAgents(){
+  var html='';
+  agents.forEach(function(a){
+    html+='<div class="agent-card'+(selectedAgent&&selectedAgent.uid===a.uid?' selected':'')+'" onclick="pickAgent(\''+a.uid+'\')">'+
+      '<div class="agent-avatar">'+(a.avatarType==='image'&&a.avatarUrl?'<img src="'+a.avatarUrl+'">':a.emoji||'👤')+'</div>'+
+      '<div><strong>'+(a.username||'مستخدم')+'</strong><br><small>'+(a.bio||'وكيل معتمد')+'</small><br><small>📧 '+a.email+'</small></div></div>';
   });
+  document.getElementById('agentsList').innerHTML=html||'<p style="color:#94a3b8">لا وكلاء</p>';
+}
+window.pickAgent=function(uid){selectedAgent=agents.find(function(a){return a.uid===uid});renderAgents()};
+window.selectAgent=function(){
+  if(!selectedAgent)return toast('اختر وكيلاً',false);
+  document.getElementById('agentName').textContent=selectedAgent.username||'وكيل';
+  closeAgents();
+};
+window.openWithdraw=function(){
+  var a=+document.getElementById('wdAmt').value||0;
+  var m=document.getElementById('wdMethodSel').value;
+  var mn={zain:'زين كاش',master:'ماستر كارد',agent:'استلام من وكيل'};
+  if(a<MIN_WITHDRAW||!m)return;
+  pendingAmount=a;selectedMethod=m;
+  document.getElementById('wdAmount').textContent=fNum(a);
+  document.getElementById('wdMethod').textContent=mn[m]||m;
+  document.getElementById('wdAgent').textContent=m==='agent'&&selectedAgent?selectedAgent.username:'-';
+  document.getElementById('withdrawModal').classList.add('show');
+};
+window.closeWithdraw=function(){document.getElementById('withdrawModal').classList.remove('show')};
+window.confirmWithdraw=async function(){
+  if(!pendingAmount||pendingAmount<MIN_WITHDRAW)return;
+  if(pendingAmount>resources.money)return toast('رصيد غير كاف',false);
+  try{
+    await updateDoc(doc(db,"resources",me.uid),{money:increment(-pendingAmount)});
+    var req={
+      uid:me.uid,userName:myData.username||'مستخدم',userEmoji:myData.emoji||'👤',
+      userAvatarType:myData.avatarType,userAvatarUrl:myData.avatarUrl,
+      userColors:myData.colors,userEmail:myData.email,
+      userId:myData.userId||me.uid.slice(0,6),
+      amount:pendingAmount,method:selectedMethod,
+      agentId:selectedMethod==='agent'&&selectedAgent?selectedAgent.uid:null,
+      agentName:selectedMethod==='agent'&&selectedAgent?selectedAgent.username:null,
+      status:'pending',createdAt:Date.now(),
+      resources:resources
+    };
+    await addDoc(collection(db,"withdraw_requests"),req);
+    resources.money-=pendingAmount;
+    
+    // إضافة للسجل المحلي
+    withdrawRequests.unshift({amount:pendingAmount,method:selectedMethod,status:'pending',createdAt:Date.now(),reason:''});
+    
+    closeWithdraw();renderMain();toast('📋 تم تقديم طلب السحب');
+  }catch(e){toast('❌ فشل',false)}
+};
 
-  document.querySelectorAll('.modal-overlay').forEach(m => {
-    m.addEventListener('click', (e) => { if (e.target === m) m.classList.remove('active'); });
-  });
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('wdAmt').addEventListener('input',updateWdBtn);
+});
+
+onAuthStateChanged(auth,async function(user){
+  if(user){me=user;await loadData(user.uid)}
+  else{document.getElementById('mainContainer').innerHTML='<p style="text-align:center;padding:50px;color:#94a3b8">يرجى تسجيل الدخول</p>'}
+});
 </script>
 </body>
 </html>
