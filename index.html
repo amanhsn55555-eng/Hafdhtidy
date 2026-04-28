@@ -1,121 +1,126 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>المحفظة • منصتي</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI','Tajawal',sans-serif}
-    body{background:linear-gradient(145deg,#f5f7fa,#e8eef5);min-height:100vh;color:#0f172a;overflow-x:hidden;width:100%;max-width:100vw;-webkit-tap-highlight-color:transparent;padding-bottom:40px;padding-top:70px}
-    .header{position:fixed;top:0;left:0;right:0;z-index:999;background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:0 0 25px 25px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
-    .header h2{font-size:19px;font-weight:800;display:flex;align-items:center;gap:8px}
-    .header h2 i{color:#fbbf24}
-    .back-btn{cursor:pointer;color:#64748b;font-size:20px}
-    .container{padding:12px;max-width:550px;margin:0 auto}
-    
-    .balance-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
-    .bal-card{background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:22px;padding:16px 12px;text-align:center}
-    .bal-card.gold{border-bottom:3px solid #fbbf24}
-    .bal-card.elixir{border-bottom:3px solid #a78bfa}
-    .bal-card.money{border-bottom:3px solid #10b981}
-    .bal-card.oil{border-bottom:3px solid #2dd4bf}
-    .bal-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:20px}
-    .gold .bal-icon{background:rgba(251,191,36,.15);color:#fbbf24}
-    .elixir .bal-icon{background:rgba(167,139,250,.15);color:#a78bfa}
-    .money .bal-icon{background:rgba(16,185,129,.15);color:#10b981}
-    .oil .bal-icon{background:rgba(45,212,191,.15);color:#2dd4bf}
-    .bal-value{font-size:22px;font-weight:800;margin-bottom:2px}
-    .bal-label{font-size:11px;color:#64748b}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>المحفظة • منصتي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI','Tajawal',sans-serif}
+        body{background:linear-gradient(145deg,#f5f7fa,#e8eef5);min-height:100vh;color:#0f172a;overflow-x:hidden;width:100%;max-width:100vw;-webkit-tap-highlight-color:transparent;padding-bottom:40px;padding-top:70px}
+        .header{position:fixed;top:0;left:0;right:0;z-index:999;background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:0 0 25px 25px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+        .header h2{font-size:19px;font-weight:800;display:flex;align-items:center;gap:8px}
+        .header h2 i{color:#fbbf24}
+        .back-btn{cursor:pointer;color:#64748b;font-size:20px}
+        .container{padding:12px;max-width:550px;margin:0 auto}
+        
+        .balance-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+        .bal-card{background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:22px;padding:16px 12px;text-align:center}
+        .bal-card.gold{border-bottom:3px solid #fbbf24}
+        .bal-card.elixir{border-bottom:3px solid #a78bfa}
+        .bal-card.money{border-bottom:3px solid #10b981}
+        .bal-card.oil{border-bottom:3px solid #2dd4bf}
+        .bal-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:20px}
+        .gold .bal-icon{background:rgba(251,191,36,.15);color:#fbbf24}
+        .elixir .bal-icon{background:rgba(167,139,250,.15);color:#a78bfa}
+        .money .bal-icon{background:rgba(16,185,129,.15);color:#10b981}
+        .oil .bal-icon{background:rgba(45,212,191,.15);color:#2dd4bf}
+        .bal-value{font-size:22px;font-weight:800;margin-bottom:2px}
+        .bal-label{font-size:11px;color:#64748b}
 
-    .section-card{background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:22px;padding:18px;margin-bottom:14px}
-    .section-card h3{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-    .section-card label{display:block;margin:8px 0 4px;font-weight:600;font-size:13px}
-    .section-card input,.section-card select{width:100%;padding:12px;border-radius:14px;border:2px solid #e2e8f0;background:#fff;font-size:14px;margin-bottom:6px}
-    
-    .btn{width:100%;padding:14px;border:none;border-radius:18px;font-weight:800;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;transition:.2s}
-    .btn-red{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
-    .btn-gold{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a}
-    .btn:disabled{opacity:.5;cursor:not-allowed}
-    .btn-sm{width:auto;flex:1;padding:10px 8px;font-size:12px}
+        .section-card{background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:22px;padding:18px;margin-bottom:14px}
+        .section-card h3{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+        .section-card label{display:block;margin:8px 0 4px;font-weight:600;font-size:13px}
+        .section-card input,.section-card select{width:100%;padding:12px;border-radius:14px;border:2px solid #e2e8f0;background:#fff;font-size:14px;margin-bottom:6px}
+        
+        .btn{width:100%;padding:14px;border:none;border-radius:18px;font-weight:800;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px;transition:.2s}
+        .btn-red{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
+        .btn-gold{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a}
+        .btn:disabled{opacity:.5;cursor:not-allowed}
+        .btn-sm{width:auto;flex:1;padding:10px 8px;font-size:12px}
 
-    .quick-amounts{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}
-    .quick-amt{padding:8px 14px;border-radius:20px;background:#f1f5f9;font-weight:600;font-size:12px;cursor:pointer;border:2px solid transparent}
-    .quick-amt:hover{border-color:#fbbf24;background:#fef3c7}
+        .quick-amounts{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}
+        .quick-amt{padding:8px 14px;border-radius:20px;background:#f1f5f9;font-weight:600;font-size:12px;cursor:pointer;border:2px solid transparent}
+        .quick-amt:hover{border-color:#fbbf24;background:#fef3c7}
 
-    .rate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
-    .rate-item{background:rgba(255,255,255,.5);border-radius:14px;padding:10px;text-align:center;font-size:12px}
-    .rate-item strong{display:block;font-size:16px;margin:4px 0}
+        .rate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+        .rate-item{background:rgba(255,255,255,.5);border-radius:14px;padding:10px;text-align:center;font-size:12px}
+        .rate-item strong{display:block;font-size:16px;margin:4px 0}
 
-    .tab-row{display:flex;gap:8px;margin-bottom:12px}
-    .tab{flex:1;padding:10px;border-radius:20px;text-align:center;font-weight:700;font-size:13px;cursor:pointer;background:#f1f5f9;color:#64748b;border:none;transition:.2s}
-    .tab.active{background:#0f172a;color:#fbbf24}
+        .tab-row{display:flex;gap:8px;margin-bottom:12px}
+        .tab{flex:1;padding:10px;border-radius:20px;text-align:center;font-weight:700;font-size:13px;cursor:pointer;background:#f1f5f9;color:#64748b;border:none;transition:.2s}
+        .tab.active{background:#0f172a;color:#fbbf24}
 
-    .preview-box{text-align:center;padding:12px;background:#fef3c7;border-radius:14px;margin:8px 0;font-weight:700;font-size:14px}
+        .preview-box{text-align:center;padding:12px;background:#fef3c7;border-radius:14px;margin:8px 0;font-weight:700;font-size:14px}
 
-    .agent-card{background:#fff;border-radius:16px;padding:14px;margin:8px 0;display:flex;align-items:center;gap:12px;cursor:pointer;border:2px solid transparent;transition:.2s}
-    .agent-card:hover{border-color:#fbbf24}
-    .agent-card.selected{border-color:#10b981;background:#f0fdf4}
-    .agent-avatar{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;border:2px solid #fbbf24;flex-shrink:0}
-    .agent-avatar img{width:100%;height:100%;object-fit:cover}
+        .agent-card{background:#fff;border-radius:16px;padding:14px;margin:8px 0;display:flex;align-items:center;gap:12px;cursor:pointer;border:2px solid transparent;transition:.2s}
+        .agent-card:hover{border-color:#fbbf24}
+        .agent-card.selected{border-color:#10b981;background:#f0fdf4}
+        .agent-avatar{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;border:2px solid #fbbf24;flex-shrink:0}
+        .agent-avatar img{width:100%;height:100%;object-fit:cover}
 
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);z-index:3000;display:none;align-items:center;justify-content:center;padding:16px}
-    .modal.show{display:flex}
-    .modal-box{background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:24px;padding:18px 14px;width:100%;max-width:430px;max-height:80vh;overflow-y:auto;position:relative}
-    .modal-box h3{margin-bottom:12px;font-size:17px;font-weight:800;text-align:center}
-    .close-btn{position:absolute;top:8px;left:10px;background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8}
+        .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);z-index:3000;display:none;align-items:center;justify-content:center;padding:16px}
+        .modal.show{display:flex}
+        .modal-box{background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:24px;padding:18px 14px;width:100%;max-width:430px;max-height:80vh;overflow-y:auto;position:relative}
+        .modal-box h3{margin-bottom:12px;font-size:17px;font-weight:800;text-align:center}
+        .close-btn{position:absolute;top:8px;left:10px;background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8}
 
-    .history-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #e2e8f0;font-size:13px}
-    .history-item:last-child{border-bottom:none}
-    .hist-icon{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-    .hist-icon.buy{background:rgba(16,185,129,.15);color:#10b981}
-    .hist-icon.sell{background:rgba(239,68,68,.15);color:#ef4444}
-    .hist-icon.withdraw{background:rgba(239,68,68,.15);color:#ef4444}
-    .hist-icon.pending{background:rgba(251,191,36,.15);color:#f59e0b}
-    .hist-icon.accepted{background:rgba(16,185,129,.15);color:#10b981}
-    .hist-icon.rejected{background:rgba(239,68,68,.15);color:#ef4444}
+        .history-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #e2e8f0;font-size:13px}
+        .history-item:last-child{border-bottom:none}
+        .hist-icon{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+        .hist-icon.buy{background:rgba(16,185,129,.15);color:#10b981}
+        .hist-icon.sell{background:rgba(239,68,68,.15);color:#ef4444}
+        .hist-icon.withdraw{background:rgba(239,68,68,.15);color:#ef4444}
+        .hist-icon.pending{background:rgba(251,191,36,.15);color:#f59e0b}
+        .hist-icon.accepted{background:rgba(16,185,129,.15);color:#10b981}
+        .hist-icon.rejected{background:rgba(239,68,68,.15);color:#ef4444}
 
-    .status-tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700}
-    .status-tag.pending{background:#fef3c7;color:#92400e}
-    .status-tag.accepted{background:#d1fae5;color:#065f46}
-    .status-tag.rejected{background:#fee2e2;color:#991b1b}
+        .status-tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700}
+        .status-tag.pending{background:#fef3c7;color:#92400e}
+        .status-tag.accepted{background:#d1fae5;color:#065f46}
+        .status-tag.rejected{background:#fee2e2;color:#991b1b}
 
-    #toast{position:fixed;bottom:20px;left:16px;right:16px;text-align:center;background:#1e293b;color:#fff;padding:12px 18px;border-radius:25px;z-index:5000;opacity:0;transition:.3s;pointer-events:none;max-width:340px;margin:0 auto;font-weight:600;font-size:13px}
-    #toast.show{opacity:1;bottom:28px}
-  </style>
+        .payment-info-box{background:#fef3c7;border-radius:14px;padding:12px;margin:10px 0;border:2px solid #fbbf24}
+        .payment-info-box label{color:#92400e;font-weight:700}
+        .payment-info-box input{background:#fff;border:2px solid #fbbf24}
+
+        #toast{position:fixed;bottom:20px;left:16px;right:16px;text-align:center;background:#1e293b;color:#fff;padding:12px 18px;border-radius:25px;z-index:5000;opacity:0;transition:.3s;pointer-events:none;max-width:340px;margin:0 auto;font-weight:600;font-size:13px}
+        #toast.show{opacity:1;bottom:28px}
+    </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="back-btn" onclick="history.back()"><i class="fas fa-arrow-right"></i></div>
-  <h2><i class="fas fa-wallet"></i> المحفظة</h2>
-  <div style="width:24px"></div>
+    <div class="back-btn" onclick="history.back()"><i class="fas fa-arrow-right"></i></div>
+    <h2><i class="fas fa-wallet"></i> المحفظة</h2>
+    <div style="width:24px"></div>
 </div>
 
 <div class="container" id="mainContainer">
-  <div style="text-align:center;padding:40px;color:#94a3b8"><i class="fas fa-spinner fa-pulse" style="font-size:30px"></i></div>
+    <div style="text-align:center;padding:40px;color:#94a3b8"><i class="fas fa-spinner fa-pulse" style="font-size:30px"></i></div>
 </div>
 
 <!-- نافذة تأكيد السحب -->
 <div class="modal" id="withdrawModal"><div class="modal-box" style="position:relative">
-  <button class="close-btn" onclick="closeWithdraw()">&times;</button>
-  <h3>💵 تأكيد السحب</h3>
-  <div style="text-align:center;padding:20px;background:#fef2f2;border-radius:16px;margin-bottom:12px">
-    <div style="font-size:36px;font-weight:800;color:#ef4444" id="wdAmount">0</div>
-    <div style="color:#64748b">TMX</div>
-  </div>
-  <p style="color:#64748b;text-align:center;margin-bottom:8px;font-size:13px">طريقة الاستلام: <strong id="wdMethod"></strong></p>
-  <p style="color:#64748b;text-align:center;margin-bottom:8px;font-size:13px">الوكيل: <strong id="wdAgent"></strong></p>
-  <button class="btn btn-red" onclick="confirmWithdraw()"><i class="fas fa-check"></i> تأكيد السحب</button>
-  <button class="btn" style="background:#f1f5f9;color:#64748b" onclick="closeWithdraw()">إلغاء</button>
+    <button class="close-btn" onclick="closeWithdraw()">&times;</button>
+    <h3>💵 تأكيد السحب</h3>
+    <div style="text-align:center;padding:20px;background:#fef2f2;border-radius:16px;margin-bottom:12px">
+        <div style="font-size:36px;font-weight:800;color:#ef4444" id="wdAmount">0</div>
+        <div style="color:#64748b">TMX</div>
+    </div>
+    <p style="color:#64748b;text-align:center;margin-bottom:8px;font-size:13px">طريقة الاستلام: <strong id="wdMethod"></strong></p>
+    <p style="color:#64748b;text-align:center;margin-bottom:8px;font-size:13px" id="wdPaymentInfo"></p>
+    <p style="color:#64748b;text-align:center;margin-bottom:8px;font-size:13px">الوكيل: <strong id="wdAgent"></strong></p>
+    <button class="btn btn-red" onclick="confirmWithdraw()"><i class="fas fa-check"></i> تأكيد السحب</button>
+    <button class="btn" style="background:#f1f5f9;color:#64748b" onclick="closeWithdraw()">إلغاء</button>
 </div></div>
 
 <!-- نافذة الوكلاء -->
 <div class="modal" id="agentModal"><div class="modal-box" style="position:relative">
-  <button class="close-btn" onclick="closeAgents()">&times;</button>
-  <h3>🤝 اختر وكيل</h3>
-  <div id="agentsList"></div>
-  <button class="btn btn-gold" onclick="selectAgent()">تأكيد الاختيار</button>
+    <button class="close-btn" onclick="closeAgents()">&times;</button>
+    <h3>🤝 اختر وكيل</h3>
+    <div id="agentsList"></div>
+    <button class="btn btn-gold" onclick="selectAgent()">تأكيد الاختيار</button>
 </div></div>
 
 <div id="toast"></div>
@@ -128,150 +133,168 @@ import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, where,
 const fc={apiKey:"AIzaSyCPBrZMo6IYCwCDYV3HEfNcUmLUITR6VRc",authDomain:"elahbes.firebaseapp.com",projectId:"elahbes",storageBucket:"elahbes.firebasestorage.app",messagingSenderId:"800207969145",appId:"1:800207969145:web:aa19b725d1c92dd48fada8",measurementId:"G-EFT566SJMP"};
 const app=initializeApp(fc),auth=getAuth(app),db=getFirestore(app);
 
-const RATES={gold:2500,elixir:5000,oil:1000};
-const SELL_FEE=0.5;
-const MIN_WITHDRAW=500;
+// القيم الافتراضية - تتحدث من لوحة التحكم
+var RATES={gold:2500,elixir:5000,oil:1000};
+var SELL_FEE=0.5;
+var MIN_WITHDRAW=500;
+var ALLOW_WITHDRAW=true;
 
 let me=null,myData=null,resources={gold:0,elixir:0,money:0,oil:0};
 let transactions=[],withdrawRequests=[];
 let pendingAmount=0,selectedMethod='',selectedAgent=null,agents=[];
 let exchangeMode='buy';
+let paymentInfo={fullName:'',cardNumber:''};
 
 function toast(m,ok){ok=ok!==false;var t=document.getElementById('toast');t.textContent=m;t.style.background=ok?'#10b981':'#ef4444';t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2500)}
 function fNum(n){return(n||0).toLocaleString('ar-SA')}
 
+// ========== قراءة الإعدادات من لوحة التحكم ==========
+async function loadAdminSettings(){
+    try{
+        var snap;
+        snap=await getDoc(doc(db,"admin_settings","rate_gold"));
+        if(snap.exists())RATES.gold=snap.data().value;
+        
+        snap=await getDoc(doc(db,"admin_settings","rate_elixir"));
+        if(snap.exists())RATES.elixir=snap.data().value;
+        
+        snap=await getDoc(doc(db,"admin_settings","rate_oil"));
+        if(snap.exists())RATES.oil=snap.data().value;
+        
+        snap=await getDoc(doc(db,"admin_settings","sell_fee"));
+        if(snap.exists())SELL_FEE=snap.data().value;
+        
+        snap=await getDoc(doc(db,"admin_settings","min_withdraw"));
+        if(snap.exists())MIN_WITHDRAW=snap.data().value;
+        
+        snap=await getDoc(doc(db,"admin_settings","allow_withdraw"));
+        if(snap.exists())ALLOW_WITHDRAW=snap.data().value;
+        
+        console.log('✅ تم تحميل إعدادات المحفظة');
+    }catch(e){console.log('⚠️ استخدام الإعدادات الافتراضية')}
+}
+
 async function loadData(uid){
-  var rd=await getDoc(doc(db,"resources",uid));
-  resources=rd.exists()?rd.data():{gold:10,elixir:10,money:10000,oil:10};
-  if(!rd.exists())await setDoc(doc(db,"resources",uid),resources);
-  
-  var wd=await getDoc(doc(db,"wallets",uid));
-  transactions=wd.exists()?wd.data().transactions||[]:[];
-  
-  var ud=await getDoc(doc(db,"users",uid));
-  myData=ud.exists()?ud.data():{username:'مستخدم',emoji:'😎',userId:uid.slice(0,6),email:''};
-  myData.uid=uid;
-  
-  // تحميل طلبات السحب الخاصة بهذا المستخدم
-  var wq=await getDocs(query(collection(db,"withdraw_requests"),where("uid","==",uid)));
-  withdrawRequests=[];
-  wq.forEach(function(d){withdrawRequests.push({id:d.id,...d.data()})});
-  withdrawRequests.sort(function(a,b){return(b.createdAt||0)-(a.createdAt||0)});
-  
-  // تحميل الوكلاء
-  for(var e of['w1@1.com','w2@2.com','w3@3.com']){
-    var q=await getDocs(query(collection(db,"users"),where("email","==",e)));
-    q.forEach(function(d){agents.push({uid:d.id,...d.data()})});
-  }
-  
-  renderMain();
+    await loadAdminSettings(); // تحميل الإعدادات أولاً
+    
+    var rd=await getDoc(doc(db,"resources",uid));
+    resources=rd.exists()?rd.data():{gold:10,elixir:10,money:10000,oil:10};
+    if(!rd.exists())await setDoc(doc(db,"resources",uid),resources);
+    
+    var wd=await getDoc(doc(db,"wallets",uid));
+    transactions=wd.exists()?wd.data().transactions||[]:[];
+    
+    var ud=await getDoc(doc(db,"users",uid));
+    myData=ud.exists()?ud.data():{username:'مستخدم',emoji:'😎',userId:uid.slice(0,6),email:''};
+    myData.uid=uid;
+    
+    // تحميل طلبات السحب
+    var wq=await getDocs(query(collection(db,"withdraw_requests"),where("uid","==",uid)));
+    withdrawRequests=[];
+    wq.forEach(function(d){withdrawRequests.push({id:d.id,...d.data()})});
+    withdrawRequests.sort(function(a,b){return(b.createdAt||0)-(a.createdAt||0)});
+    
+    // تحميل الوكلاء
+    for(var e of['w1@1.com','w2@2.com','w3@3.com']){
+        var q=await getDocs(query(collection(db,"users"),where("email","==",e)));
+        q.forEach(function(d){agents.push({uid:d.id,...d.data()})});
+    }
+    
+    renderMain();
 }
 
 function renderMain(){
-  var c=document.getElementById('mainContainer');
-  var html='';
-  
-  // بطاقات الأرصدة
-  html+='<div class="balance-cards">'+
-    '<div class="bal-card money"><div class="bal-icon"><i class="fas fa-coins"></i></div><div class="bal-value">'+fNum(resources.money)+'</div><div class="bal-label">💰 TMX</div></div>'+
-    '<div class="bal-card gold"><div class="bal-icon"><i class="fas fa-gem"></i></div><div class="bal-value">'+fNum(resources.gold)+'</div><div class="bal-label">🪙 ذهب</div></div>'+
-    '<div class="bal-card elixir"><div class="bal-icon"><i class="fas fa-flask"></i></div><div class="bal-value">'+fNum(resources.elixir)+'</div><div class="bal-label">🧪 إكسير</div></div>'+
-    '<div class="bal-card oil"><div class="bal-icon"><i class="fas fa-oil-can"></i></div><div class="bal-value">'+fNum(resources.oil)+'</div><div class="bal-label">🛢️ نفط</div></div>'+
-    '</div>';
-  
-  // أسعار الصرف
-  html+='<div class="section-card"><h3><i class="fas fa-chart-line"></i> أسعار الصرف</h3>'+
-    '<div class="rate-grid">'+
-    '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.gold)+'</strong>🪙 ذهب</div>'+
-    '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.elixir)+'</strong>🧪 إكسير</div>'+
-    '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.oil)+'</strong>🛢️ نفط</div>'+
-    '</div>'+
-    '<div style="text-align:center;color:#ef4444;font-size:11px;margin-top:6px">⚠️ البيع يستقطع 50% رسوم</div></div>';
-  
-  // تبويبات شراء/بيع
-  html+='<div class="section-card"><div class="tab-row">'+
-    '<button class="tab '+(exchangeMode==='buy'?'active':'')+'" onclick="switchMode(\'buy\')"><i class="fas fa-cart-plus"></i> شراء</button>'+
-    '<button class="tab '+(exchangeMode==='sell'?'active':'')+'" onclick="switchMode(\'sell\')"><i class="fas fa-cart-arrow-down"></i> بيع</button>'+
-    '</div>';
-  
-  if(exchangeMode==='buy'){
-    html+='<label>المبلغ (TMX)</label><input type="number" id="buyAmt" placeholder="المبلغ" min="1" oninput="updateBuy()">'+
-      '<div class="preview-box" id="buyPreview">أدخل مبلغاً لرؤية المعادل</div>'+
-      '<div style="display:flex;gap:8px;margin-top:8px">'+
-      '<button class="btn btn-gold btn-sm" onclick="execBuy(\'gold\')"><i class="fas fa-gem"></i> شراء ذهب</button>'+
-      '<button class="btn btn-gold btn-sm" onclick="execBuy(\'elixir\')"><i class="fas fa-flask"></i> شراء إكسير</button>'+
-      '<button class="btn btn-gold btn-sm" onclick="execBuy(\'oil\')"><i class="fas fa-oil-can"></i> شراء نفط</button></div>';
-  } else {
-    html+='<label>اختر العملة للبيع</label>'+
-      '<div style="display:flex;gap:8px;margin-bottom:8px">'+
-      '<button class="btn btn-gold btn-sm" id="sellGoldBtn" onclick="selectSell(\'gold\')"><i class="fas fa-gem"></i> ذهب</button>'+
-      '<button class="btn btn-gold btn-sm" id="sellElixirBtn" onclick="selectSell(\'elixir\')"><i class="fas fa-flask"></i> إكسير</button>'+
-      '<button class="btn btn-gold btn-sm" id="sellOilBtn" onclick="selectSell(\'oil\')"><i class="fas fa-oil-can"></i> نفط</button></div>'+
-      '<input type="hidden" id="sellType" value="gold">'+
-      '<label>الكمية للبيع</label><input type="number" id="sellAmt" placeholder="الكمية" min="1" oninput="updateSell()">'+
-      '<div style="font-size:11px;color:#64748b">المتاح: <span id="sellAvail">0</span></div>'+
-      '<div class="preview-box" id="sellPreview">أدخل كمية لرؤية العائد</div>'+
-      '<button class="btn btn-red" onclick="execSell()"><i class="fas fa-cart-arrow-down"></i> بيع</button>';
-  }
-  html+='</div>';
-  
-  // قسم السحب
-  html+='<div class="section-card"><h3><i class="fas fa-hand-holding-usd"></i> سحب الأموال</h3>'+
-    '<p style="font-size:12px;color:#ef4444;margin-bottom:8px">الحد الأدنى: '+fNum(MIN_WITHDRAW)+' TMX</p>'+
-    '<div class="quick-amounts">'+
-    '<span class="quick-amt" onclick="setAmt(500)">500</span><span class="quick-amt" onclick="setAmt(1000)">1,000</span>'+
-    '<span class="quick-amt" onclick="setAmt(5000)">5,000</span><span class="quick-amt" onclick="setAmt(10000)">10,000</span></div>'+
-    '<label>المبلغ</label><input type="number" id="wdAmt" placeholder="أدخل المبلغ" min="'+MIN_WITHDRAW+'">'+
-    '<label>طريقة الاستلام</label><select id="wdMethodSel" onchange="onMethodChange()">'+
-    '<option value="">اختر...</option><option value="zain">زين كاش</option><option value="master">ماستر كارد</option><option value="agent">استلام من وكيل</option></select>'+
-    '<div id="agentInfo" style="display:none;margin:6px 0;padding:10px;background:#fef3c7;border-radius:12px;cursor:pointer" onclick="openAgents()">'+
-    '<span id="agentName">اختر وكيل...</span></div>'+
-    '<button class="btn btn-red" id="wdBtn" onclick="openWithdraw()" disabled>سحب</button></div>';
-  
-  // سجل العمليات (شراء/بيع + طلبات السحب)
-  var allHistory=[];
-  // عمليات الشراء والبيع
-  transactions.forEach(function(t){
-    allHistory.push({type:t.type,data:t,timestamp:t.createdAt});
-  });
-  // طلبات السحب
-  withdrawRequests.forEach(function(r){
-    allHistory.push({type:'withdraw_req',data:r,timestamp:r.createdAt});
-  });
-  allHistory.sort(function(a,b){return(b.timestamp||0)-(a.timestamp||0)});
-  
-  if(allHistory.length>0){
-    html+='<div class="section-card"><h3><i class="fas fa-history"></i> سجل العمليات</h3>';
-    allHistory.slice(0,20).forEach(function(item){
-      if(item.type==='buy'||item.type==='sell'){
-        var t=item.data;
-        var isBuy=t.type==='buy';
-        html+='<div class="history-item">'+
-          '<div class="hist-icon '+(isBuy?'buy':'sell')+'"><i class="fas fa-'+(isBuy?'cart-plus':'cart-arrow-down')+'"></i></div>'+
-          '<div style="flex:1"><strong>'+(isBuy?'شراء':'بيع')+'</strong> '+(t.resourceName||'')+
-          '<br><small style="color:#94a3b8">'+new Date(t.createdAt).toLocaleString('ar-SA')+'</small></div>'+
-          '<div style="text-align:left">'+
-          '<span style="color:#ef4444">-'+fNum(t.spent)+' '+(t.spentCurrency||'')+'</span><br>'+
-          '<span style="color:#10b981">+'+fNum(t.received)+' '+(t.receivedCurrency||'')+'</span></div></div>';
-      } else if(item.type==='withdraw_req'){
-        var r=item.data;
-        var statusClass=r.status||'pending';
-        var statusIcon=r.status==='accepted'?'check-circle':r.status==='rejected'?'times-circle':'clock';
-        var statusText=r.status==='accepted'?'مقبول':r.status==='rejected'?'مرفوض':'معلق';
-        var methodText=r.method==='zain'?'زين كاش':r.method==='master'?'ماستر كارد':'وكيل: '+(r.agentName||'?');
-        html+='<div class="history-item">'+
-          '<div class="hist-icon '+(r.status||'pending')+'"><i class="fas fa-'+statusIcon+'"></i></div>'+
-          '<div style="flex:1"><strong>طلب سحب</strong> <span class="status-tag '+statusClass+'">'+statusText+'</span>'+
-          '<br><small style="color:#94a3b8">'+new Date(r.createdAt).toLocaleString('ar-SA')+' | '+methodText+'</small>'+
-          (r.reason?'<br><small style="color:#ef4444">سبب الرفض: '+r.reason+'</small>':'')+'</div>'+
-          '<div style="text-align:left"><span style="color:#ef4444;font-weight:700">-'+fNum(r.amount)+' TMX</span></div></div>';
-      }
-    });
+    var c=document.getElementById('mainContainer');
+    var html='';
+    
+    // بطاقات الأرصدة
+    html+='<div class="balance-cards">'+
+        '<div class="bal-card money"><div class="bal-icon"><i class="fas fa-coins"></i></div><div class="bal-value">'+fNum(resources.money)+'</div><div class="bal-label">💰 TMX</div></div>'+
+        '<div class="bal-card gold"><div class="bal-icon"><i class="fas fa-gem"></i></div><div class="bal-value">'+fNum(resources.gold)+'</div><div class="bal-label">🪙 ذهب</div></div>'+
+        '<div class="bal-card elixir"><div class="bal-icon"><i class="fas fa-flask"></i></div><div class="bal-value">'+fNum(resources.elixir)+'</div><div class="bal-label">🧪 إكسير</div></div>'+
+        '<div class="bal-card oil"><div class="bal-icon"><i class="fas fa-oil-can"></i></div><div class="bal-value">'+fNum(resources.oil)+'</div><div class="bal-label">🛢️ نفط</div></div>'+
+        '</div>';
+    
+    // أسعار الصرف
+    html+='<div class="section-card"><h3><i class="fas fa-chart-line"></i> أسعار الصرف</h3>'+
+        '<div class="rate-grid">'+
+        '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.gold)+'</strong>🪙 ذهب</div>'+
+        '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.elixir)+'</strong>🧪 إكسير</div>'+
+        '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.oil)+'</strong>🛢️ نفط</div>'+
+        '</div>'+
+        '<div style="text-align:center;color:#ef4444;font-size:11px;margin-top:6px">⚠️ البيع يستقطع '+Math.round(SELL_FEE*100)+'% رسوم</div></div>';
+    
+    // تبويبات شراء/بيع
+    html+='<div class="section-card"><div class="tab-row">'+
+        '<button class="tab '+(exchangeMode==='buy'?'active':'')+'" onclick="switchMode(\'buy\')"><i class="fas fa-cart-plus"></i> شراء</button>'+
+        '<button class="tab '+(exchangeMode==='sell'?'active':'')+'" onclick="switchMode(\'sell\')"><i class="fas fa-cart-arrow-down"></i> بيع</button>'+
+        '</div>';
+    
+    if(exchangeMode==='buy'){
+        html+='<label>المبلغ (TMX)</label><input type="number" id="buyAmt" placeholder="المبلغ" min="1" oninput="updateBuy()">'+
+            '<div class="preview-box" id="buyPreview">أدخل مبلغاً لرؤية المعادل</div>'+
+            '<div style="display:flex;gap:8px;margin-top:8px">'+
+            '<button class="btn btn-gold btn-sm" onclick="execBuy(\'gold\')"><i class="fas fa-gem"></i> شراء ذهب</button>'+
+            '<button class="btn btn-gold btn-sm" onclick="execBuy(\'elixir\')"><i class="fas fa-flask"></i> شراء إكسير</button>'+
+            '<button class="btn btn-gold btn-sm" onclick="execBuy(\'oil\')"><i class="fas fa-oil-can"></i> شراء نفط</button></div>';
+    } else {
+        html+='<label>اختر العملة للبيع</label>'+
+            '<div style="display:flex;gap:8px;margin-bottom:8px">'+
+            '<button class="btn btn-gold btn-sm" id="sellGoldBtn" onclick="selectSell(\'gold\')"><i class="fas fa-gem"></i> ذهب</button>'+
+            '<button class="btn btn-gold btn-sm" id="sellElixirBtn" onclick="selectSell(\'elixir\')"><i class="fas fa-flask"></i> إكسير</button>'+
+            '<button class="btn btn-gold btn-sm" id="sellOilBtn" onclick="selectSell(\'oil\')"><i class="fas fa-oil-can"></i> نفط</button></div>'+
+            '<input type="hidden" id="sellType" value="gold">'+
+            '<label>الكمية للبيع</label><input type="number" id="sellAmt" placeholder="الكمية" min="1" oninput="updateSell()">'+
+            '<div style="font-size:11px;color:#64748b">المتاح: <span id="sellAvail">0</span></div>'+
+            '<div class="preview-box" id="sellPreview">أدخل كمية لرؤية العائد</div>'+
+            '<button class="btn btn-red" onclick="execSell()"><i class="fas fa-cart-arrow-down"></i> بيع</button>';
+    }
     html+='</div>';
-  }
-  
-  c.innerHTML=html;
-  updateWdBtn();
+    
+    // قسم السحب
+    html+='<div class="section-card"><h3><i class="fas fa-hand-holding-usd"></i> سحب الأموال</h3>'+
+        '<p style="font-size:12px;color:#ef4444;margin-bottom:8px">الحد الأدنى: '+fNum(MIN_WITHDRAW)+' TMX</p>'+
+        '<div class="quick-amounts">'+
+        '<span class="quick-amt" onclick="setAmt(500)">500</span><span class="quick-amt" onclick="setAmt(1000)">1,000</span>'+
+        '<span class="quick-amt" onclick="setAmt(5000)">5,000</span><span class="quick-amt" onclick="setAmt(10000)">10,000</span></div>'+
+        '<label>المبلغ</label><input type="number" id="wdAmt" placeholder="أدخل المبلغ" min="'+MIN_WITHDRAW+'">'+
+        '<label>طريقة الاستلام</label><select id="wdMethodSel" onchange="onMethodChange()">'+
+        '<option value="">اختر...</option><option value="zain">زين كاش</option><option value="master">ماستر كارد</option><option value="agent">استلام من وكيل</option></select>'+
+        '<div id="paymentFields" style="display:none">'+
+        '<div class="payment-info-box">'+
+        '<label>👤 الاسم الكامل</label><input type="text" id="fullName" placeholder="الاسم كما في البطاقة">'+
+        '<label>💳 رقم البطاقة / المحفظة</label><input type="text" id="cardNumber" placeholder="أدخل الرقم">'+
+        '</div></div>'+
+        '<div id="agentInfo" style="display:none;margin:6px 0;padding:10px;background:#fef3c7;border-radius:12px;cursor:pointer" onclick="openAgents()">'+
+        '<span id="agentName">اختر وكيل...</span></div>'+
+        '<button class="btn btn-red" id="wdBtn" onclick="openWithdraw()" disabled>سحب</button></div>';
+    
+    // سجل العمليات
+    var allHistory=[];
+    transactions.forEach(function(t){allHistory.push({type:t.type,data:t,timestamp:t.createdAt})});
+    withdrawRequests.forEach(function(r){allHistory.push({type:'withdraw_req',data:r,timestamp:r.createdAt})});
+    allHistory.sort(function(a,b){return(b.timestamp||0)-(a.timestamp||0)});
+    
+    if(allHistory.length>0){
+        html+='<div class="section-card"><h3><i class="fas fa-history"></i> سجل العمليات</h3>';
+        allHistory.slice(0,20).forEach(function(item){
+            if(item.type==='buy'||item.type==='sell'){
+                var t=item.data;var isBuy=t.type==='buy';
+                html+='<div class="history-item"><div class="hist-icon '+(isBuy?'buy':'sell')+'"><i class="fas fa-'+(isBuy?'cart-plus':'cart-arrow-down')+'"></i></div><div style="flex:1"><strong>'+(isBuy?'شراء':'بيع')+'</strong> '+(t.resourceName||'')+'<br><small>'+new Date(t.createdAt).toLocaleString('ar-SA')+'</small></div><div style="text-align:left"><span style="color:#ef4444">-'+fNum(t.spent)+' '+(t.spentCurrency||'')+'</span><br><span style="color:#10b981">+'+fNum(t.received)+' '+(t.receivedCurrency||'')+'</span></div></div>';
+            } else if(item.type==='withdraw_req'){
+                var r=item.data;
+                var sc=r.status||'pending';
+                var si=r.status==='accepted'?'check-circle':r.status==='rejected'?'times-circle':'clock';
+                var st=r.status==='accepted'?'مقبول':r.status==='rejected'?'مرفوض':'معلق';
+                var mt=r.method==='zain'?'زين كاش':r.method==='master'?'ماستر كارد':'وكيل';
+                html+='<div class="history-item"><div class="hist-icon '+(r.status||'pending')+'"><i class="fas fa-'+si+'"></i></div><div style="flex:1"><strong>طلب سحب</strong> <span class="status-tag '+sc+'">'+st+'</span><br><small>'+new Date(r.createdAt).toLocaleString('ar-SA')+' | '+mt+'</small>'+(r.reason?'<br><small style="color:#ef4444">سبب الرفض: '+r.reason+'</small>':'')+'</div><div style="text-align:left"><span style="color:#ef4444;font-weight:700">-'+fNum(r.amount)+' TMX</span></div></div>';
+            }
+        });
+        html+='</div>';
+    }
+    
+    c.innerHTML=html;
+    updateWdBtn();
 }
 
 // ========== التبويب ==========
@@ -280,137 +303,191 @@ window.switchMode=function(m){exchangeMode=m;renderMain()};
 // ========== شراء ==========
 window.updateBuy=function(){var a=+document.getElementById('buyAmt').value||0;document.getElementById('buyPreview').innerHTML=a>0?'💰 '+a+' TMX =<br>🪙 '+fNum(a*RATES.gold)+' ذهب | 🧪 '+fNum(a*RATES.elixir)+' إكسير | 🛢️ '+fNum(a*RATES.oil)+' نفط':'أدخل مبلغاً لرؤية المعادل'};
 window.execBuy=async function(type){
-  var amt=+document.getElementById('buyAmt').value||0;
-  if(amt<1)return toast('أدخل مبلغاً',false);
-  if(resources.money<amt)return toast('رصيد غير كاف',false);
-  var received=amt*RATES[type];
-  var names={gold:'ذهب',elixir:'إكسير',oil:'نفط'};
-  try{
-    var upd={money:increment(-amt)};upd[type]=increment(received);
-    await updateDoc(doc(db,"resources",me.uid),upd);
-    resources.money-=amt;resources[type]=(resources[type]||0)+received;
-    var tx={type:'buy',spent:amt,spentCurrency:'TMX',received:received,receivedCurrency:names[type],resourceName:names[type],createdAt:Date.now()};
-    transactions.push(tx);
-    var wd=await getDoc(doc(db,"wallets",me.uid));
-    var ts=wd.exists()?wd.data().transactions||[]:[];
-    ts.push(tx);await setDoc(doc(db,"wallets",me.uid),{transactions:ts},{merge:true});
-    renderMain();toast('✅ تم شراء '+fNum(received)+' '+names[type]);
-  }catch(e){toast('❌ فشل',false)}
+    var amt=+document.getElementById('buyAmt').value||0;
+    if(amt<1)return toast('أدخل مبلغاً',false);
+    if(resources.money<amt)return toast('رصيد غير كاف',false);
+    var received=amt*RATES[type];
+    var names={gold:'ذهب',elixir:'إكسير',oil:'نفط'};
+    try{
+        var upd={money:increment(-amt)};upd[type]=increment(received);
+        await updateDoc(doc(db,"resources",me.uid),upd);
+        resources.money-=amt;resources[type]=(resources[type]||0)+received;
+        var tx={type:'buy',spent:amt,spentCurrency:'TMX',received:received,receivedCurrency:names[type],createdAt:Date.now()};
+        transactions.push(tx);
+        var wd=await getDoc(doc(db,"wallets",me.uid));
+        var ts=wd.exists()?wd.data().transactions||[]:[];
+        ts.push(tx);await setDoc(doc(db,"wallets",me.uid),{transactions:ts},{merge:true});
+        renderMain();toast('✅ تم شراء '+fNum(received)+' '+names[type]);
+    }catch(e){toast('❌ فشل',false)}
 };
 
 // ========== بيع ==========
 window.selectSell=function(type){
-  document.getElementById('sellType').value=type;
-  document.getElementById('sellAvail').textContent=fNum(resources[type]||0);
-  document.querySelectorAll('#sellGoldBtn,#sellElixirBtn,#sellOilBtn').forEach(function(b){b.style.background='';b.style.color=''});
-  event.target.style.background='#0f172a';event.target.style.color='#fbbf24';
-  updateSell();
+    document.getElementById('sellType').value=type;
+    document.getElementById('sellAvail').textContent=fNum(resources[type]||0);
+    document.querySelectorAll('#sellGoldBtn,#sellElixirBtn,#sellOilBtn').forEach(function(b){b.style.background='';b.style.color=''});
+    event.target.style.background='#0f172a';event.target.style.color='#fbbf24';
+    updateSell();
 };
 window.updateSell=function(){
-  var type=document.getElementById('sellType').value;
-  var amt=+document.getElementById('sellAmt').value||0;
-  document.getElementById('sellAvail').textContent=fNum(resources[type]||0);
-  if(amt>0){
-    var rate=RATES[type]||1;
-    var received=Math.floor((amt/rate)*SELL_FEE);
-    document.getElementById('sellPreview').innerHTML='بيع '+fNum(amt)+' '+{gold:'ذهب',elixir:'إكسير',oil:'نفط'}[type]+' = <strong>'+fNum(received)+' TMX</strong> (بعد خصم 50%)';
-  } else {document.getElementById('sellPreview').innerHTML='أدخل كمية لرؤية العائد'}
+    var type=document.getElementById('sellType').value;
+    var amt=+document.getElementById('sellAmt').value||0;
+    document.getElementById('sellAvail').textContent=fNum(resources[type]||0);
+    if(amt>0){
+        var rate=RATES[type]||1;
+        var received=Math.floor((amt/rate)*SELL_FEE);
+        document.getElementById('sellPreview').innerHTML='بيع '+fNum(amt)+' '+{gold:'ذهب',elixir:'إكسير',oil:'نفط'}[type]+' = <strong>'+fNum(received)+' TMX</strong> (بعد خصم '+Math.round(SELL_FEE*100)+'%)';
+    } else {document.getElementById('sellPreview').innerHTML='أدخل كمية لرؤية العائد'}
 };
 window.execSell=async function(){
-  var type=document.getElementById('sellType').value;
-  var amt=+document.getElementById('sellAmt').value||0;
-  if(amt<1)return toast('أدخل كمية',false);
-  if((resources[type]||0)<amt)return toast('رصيد غير كاف',false);
-  var rate=RATES[type]||1;
-  var received=Math.floor((amt/rate)*SELL_FEE);
-  var names={gold:'ذهب',elixir:'إكسير',oil:'نفط'};
-  try{
-    var upd={};upd[type]=increment(-amt);upd.money=increment(received);
-    await updateDoc(doc(db,"resources",me.uid),upd);
-    resources[type]-=amt;resources.money+=received;
-    var tx={type:'sell',spent:amt,spentCurrency:names[type],received:received,receivedCurrency:'TMX',resourceName:names[type],createdAt:Date.now()};
-    transactions.push(tx);
-    var wd=await getDoc(doc(db,"wallets",me.uid));
-    var ts=wd.exists()?wd.data().transactions||[]:[];
-    ts.push(tx);await setDoc(doc(db,"wallets",me.uid),{transactions:ts},{merge:true});
-    renderMain();toast('✅ تم بيع '+fNum(amt)+' '+names[type]+' مقابل '+fNum(received)+' TMX');
-  }catch(e){toast('❌ فشل',false)}
+    var type=document.getElementById('sellType').value;
+    var amt=+document.getElementById('sellAmt').value||0;
+    if(amt<1)return toast('أدخل كمية',false);
+    if((resources[type]||0)<amt)return toast('رصيد غير كاف',false);
+    var rate=RATES[type]||1;
+    var received=Math.floor((amt/rate)*SELL_FEE);
+    var names={gold:'ذهب',elixir:'إكسير',oil:'نفط'};
+    try{
+        var upd={};upd[type]=increment(-amt);upd.money=increment(received);
+        await updateDoc(doc(db,"resources",me.uid),upd);
+        resources[type]-=amt;resources.money+=received;
+        var tx={type:'sell',spent:amt,spentCurrency:names[type],received:received,receivedCurrency:'TMX',createdAt:Date.now()};
+        transactions.push(tx);
+        var wd=await getDoc(doc(db,"wallets",me.uid));
+        var ts=wd.exists()?wd.data().transactions||[]:[];
+        ts.push(tx);await setDoc(doc(db,"wallets",me.uid),{transactions:ts},{merge:true});
+        renderMain();toast('✅ تم بيع '+fNum(amt)+' '+names[type]+' مقابل '+fNum(received)+' TMX');
+    }catch(e){toast('❌ فشل',false)}
 };
 
 // ========== سحب ==========
 window.setAmt=function(a){document.getElementById('wdAmt').value=a;updateWdBtn()};
 window.updateWdBtn=function(){
-  var a=+document.getElementById('wdAmt').value||0;
-  var m=document.getElementById('wdMethodSel').value;
-  var btn=document.getElementById('wdBtn');
-  if(btn)btn.disabled=a<MIN_WITHDRAW||a>resources.money||!m;
+    var a=+document.getElementById('wdAmt').value||0;
+    var m=document.getElementById('wdMethodSel').value;
+    var btn=document.getElementById('wdBtn');
+    if(btn)btn.disabled=a<MIN_WITHDRAW||a>resources.money||!m||ALLOW_WITHDRAW===false;
 };
 window.onMethodChange=function(){
-  document.getElementById('agentInfo').style.display=document.getElementById('wdMethodSel').value==='agent'?'block':'none';
-  updateWdBtn();
+    var m=document.getElementById('wdMethodSel').value;
+    document.getElementById('agentInfo').style.display=m==='agent'?'block':'none';
+    document.getElementById('paymentFields').style.display=(m==='zain'||m==='master')?'block':'none';
+    updateWdBtn();
 };
 window.openAgents=function(){document.getElementById('agentModal').classList.add('show');renderAgents()};
 window.closeAgents=function(){document.getElementById('agentModal').classList.remove('show')};
 function renderAgents(){
-  var html='';
-  agents.forEach(function(a){
-    html+='<div class="agent-card'+(selectedAgent&&selectedAgent.uid===a.uid?' selected':'')+'" onclick="pickAgent(\''+a.uid+'\')">'+
-      '<div class="agent-avatar">'+(a.avatarType==='image'&&a.avatarUrl?'<img src="'+a.avatarUrl+'">':a.emoji||'👤')+'</div>'+
-      '<div><strong>'+(a.username||'مستخدم')+'</strong><br><small>'+(a.bio||'وكيل معتمد')+'</small><br><small>📧 '+a.email+'</small></div></div>';
-  });
-  document.getElementById('agentsList').innerHTML=html||'<p style="color:#94a3b8">لا وكلاء</p>';
+    var html='';
+    agents.forEach(function(a){
+        html+='<div class="agent-card'+(selectedAgent&&selectedAgent.uid===a.uid?' selected':'')+'" onclick="pickAgent(\''+a.uid+'\')">'+
+            '<div class="agent-avatar">'+(a.avatarType==='image'&&a.avatarUrl?'<img src="'+a.avatarUrl+'">':a.emoji||'👤')+'</div>'+
+            '<div><strong>'+(a.username||'مستخدم')+'</strong><br><small>'+(a.bio||'وكيل معتمد')+'</small><br><small>📧 '+a.email+'</small></div></div>';
+    });
+    document.getElementById('agentsList').innerHTML=html||'<p style="color:#94a3b8">لا وكلاء</p>';
 }
 window.pickAgent=function(uid){selectedAgent=agents.find(function(a){return a.uid===uid});renderAgents()};
 window.selectAgent=function(){
-  if(!selectedAgent)return toast('اختر وكيلاً',false);
-  document.getElementById('agentName').textContent=selectedAgent.username||'وكيل';
-  closeAgents();
+    if(!selectedAgent)return toast('اختر وكيلاً',false);
+    document.getElementById('agentName').textContent=selectedAgent.username||'وكيل';
+    closeAgents();
 };
 window.openWithdraw=function(){
-  var a=+document.getElementById('wdAmt').value||0;
-  var m=document.getElementById('wdMethodSel').value;
-  var mn={zain:'زين كاش',master:'ماستر كارد',agent:'استلام من وكيل'};
-  if(a<MIN_WITHDRAW||!m)return;
-  pendingAmount=a;selectedMethod=m;
-  document.getElementById('wdAmount').textContent=fNum(a);
-  document.getElementById('wdMethod').textContent=mn[m]||m;
-  document.getElementById('wdAgent').textContent=m==='agent'&&selectedAgent?selectedAgent.username:'-';
-  document.getElementById('withdrawModal').classList.add('show');
+    var a=+document.getElementById('wdAmt').value||0;
+    var m=document.getElementById('wdMethodSel').value;
+    if(ALLOW_WITHDRAW===false){toast('🚫 السحب معلق حالياً من قبل الإدارة',false);return}
+    if(a<MIN_WITHDRAW||!m)return;
+    
+    // التحقق من معلومات الدفع
+    if(m==='zain'||m==='master'){
+        var fullName=document.getElementById('fullName').value.trim();
+        var cardNumber=document.getElementById('cardNumber').value.trim();
+        if(!fullName||!cardNumber){toast('الرجاء إدخال معلومات الدفع كاملة',false);return}
+        paymentInfo={fullName:fullName,cardNumber:cardNumber};
+    }
+    
+    pendingAmount=a;selectedMethod=m;
+    var mn={zain:'زين كاش',master:'ماستر كارد',agent:'استلام من وكيل'};
+    document.getElementById('wdAmount').textContent=fNum(a);
+    document.getElementById('wdMethod').textContent=mn[m]||m;
+    
+    if(m==='zain'||m==='master'){
+        document.getElementById('wdPaymentInfo').innerHTML='👤 '+paymentInfo.fullName+' | 💳 '+paymentInfo.cardNumber;
+    } else {
+        document.getElementById('wdPaymentInfo').textContent='';
+    }
+    
+    document.getElementById('wdAgent').textContent=m==='agent'&&selectedAgent?selectedAgent.username:'-';
+    document.getElementById('withdrawModal').classList.add('show');
 };
 window.closeWithdraw=function(){document.getElementById('withdrawModal').classList.remove('show')};
 window.confirmWithdraw=async function(){
-  if(!pendingAmount||pendingAmount<MIN_WITHDRAW)return;
-  if(pendingAmount>resources.money)return toast('رصيد غير كاف',false);
-  try{
-    await updateDoc(doc(db,"resources",me.uid),{money:increment(-pendingAmount)});
-    var req={
-      uid:me.uid,userName:myData.username||'مستخدم',userEmoji:myData.emoji||'👤',
-      userAvatarType:myData.avatarType,userAvatarUrl:myData.avatarUrl,
-      userColors:myData.colors,userEmail:myData.email,
-      userId:myData.userId||me.uid.slice(0,6),
-      amount:pendingAmount,method:selectedMethod,
-      agentId:selectedMethod==='agent'&&selectedAgent?selectedAgent.uid:null,
-      agentName:selectedMethod==='agent'&&selectedAgent?selectedAgent.username:null,
-      status:'pending',createdAt:Date.now(),
-      resources:resources
-    };
-    await addDoc(collection(db,"withdraw_requests"),req);
-    resources.money-=pendingAmount;
-    
-    // إضافة للسجل المحلي
-    withdrawRequests.unshift({amount:pendingAmount,method:selectedMethod,status:'pending',createdAt:Date.now(),reason:''});
-    
-    closeWithdraw();renderMain();toast('📋 تم تقديم طلب السحب');
-  }catch(e){toast('❌ فشل',false)}
+    if(!pendingAmount||pendingAmount<MIN_WITHDRAW)return;
+    if(pendingAmount>resources.money)return toast('رصيد غير كاف',false);
+    try{
+        // ✅ قراءة إعدادات نسبة الصديق من لوحة التحكم
+        var fp=1,fe=true;
+        try{
+            var s=await getDoc(doc(db,"admin_settings","friend_fee_percent"));
+            if(s.exists())fp=s.data().value;
+            s=await getDoc(doc(db,"admin_settings","friend_fee_enabled"));
+            if(s.exists())fe=s.data().value;
+        }catch(e){}
+        
+        var ff=0,fu=null,wa=pendingAmount;
+        
+        // التحقق من وجود معرف صديق
+        var ud=await getDoc(doc(db,"users",me.uid));
+        if(ud.exists()){
+            var u=ud.data();
+            if(u.friendUid&&fe&&fp>0){
+                fu=u.friendUid;
+                ff=Math.floor(pendingAmount*fp/100);
+                if(ff>0){
+                    // تحويل النسبة لصاحب المعرف
+                    await updateDoc(doc(db,"resources",fu),{money:increment(ff)});
+                }
+                wa=pendingAmount-ff;
+            }
+        }
+        
+        // خصم المبلغ الكامل من المستخدم
+        await updateDoc(doc(db,"resources",me.uid),{money:increment(-pendingAmount)});
+        resources.money-=pendingAmount;
+        
+        var req={
+            uid:me.uid,userName:myData.username||'مستخدم',userEmoji:myData.emoji||'👤',
+            userAvatarType:myData.avatarType,userAvatarUrl:myData.avatarUrl,
+            userColors:myData.colors,userEmail:myData.email,
+            userId:myData.userId||me.uid.slice(0,6),
+            amount:wa,originalAmount:pendingAmount,friendFee:ff,friendUid:fu,
+            method:selectedMethod,
+            agentId:selectedMethod==='agent'&&selectedAgent?selectedAgent.uid:null,
+            agentName:selectedMethod==='agent'&&selectedAgent?selectedAgent.username:null,
+            paymentInfo:selectedMethod!=='agent'?paymentInfo:null,
+            status:'pending',createdAt:Date.now(),resources:resources
+        };
+        await addDoc(collection(db,"withdraw_requests"),req);
+        
+        withdrawRequests.unshift({
+            amount:wa,originalAmount:pendingAmount,friendFee:ff,
+            method:selectedMethod,status:'pending',createdAt:Date.now(),
+            reason:'',paymentInfo:selectedMethod!=='agent'?paymentInfo:null
+        });
+        
+        closeWithdraw();renderMain();
+        var msg='📋 تم تقديم طلب السحب';
+        if(ff>0)msg+=' ('+fp+'% لصاحب المعرف: '+fNum(ff)+' TMX)';
+        toast(msg);
+    }catch(e){toast('❌ فشل',false)}
 };
 
 document.addEventListener('DOMContentLoaded',function(){
-  document.getElementById('wdAmt').addEventListener('input',updateWdBtn);
+    document.getElementById('wdAmt').addEventListener('input',updateWdBtn);
 });
 
 onAuthStateChanged(auth,async function(user){
-  if(user){me=user;await loadData(user.uid)}
-  else{document.getElementById('mainContainer').innerHTML='<p style="text-align:center;padding:50px;color:#94a3b8">يرجى تسجيل الدخول</p>'}
+    if(user){me=user;await loadData(user.uid)}
+    else{document.getElementById('mainContainer').innerHTML='<p style="text-align:center;padding:50px;color:#94a3b8">يرجى تسجيل الدخول</p>'}
 });
 </script>
 </body>
