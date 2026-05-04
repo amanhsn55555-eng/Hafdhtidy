@@ -102,6 +102,7 @@
         .hist-icon.pending{background:rgba(251,191,36,.15);color:#f59e0b}
         .hist-icon.accepted{background:rgba(16,185,129,.15);color:#10b981}
         .hist-icon.rejected{background:rgba(239,68,68,.15);color:#ef4444}
+        .hist-icon.referral{background:rgba(139,92,246,.15);color:#8b5cf6}
 
         .status-tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700}
         .status-tag.pending{background:#fef3c7;color:#92400e}
@@ -129,9 +130,8 @@
         .charge-instruction i{color:#f59e0b;font-size:24px;margin-bottom:8px}
         .charge-instruction p{color:#92400e;font-size:13px;font-weight:600;margin:5px 0}
 
-        #toast{position:fixed;bottom:20px;left:16px;right:16px;text-align:center;background:#1e293b;color:#fff;padding:12px 18px;border-radius:25px;z-index:5000;opacity:0;transition:.3s;pointer-events:none;max-width:340px;margin:0 auto;font-weight:600;font-size:13px}
-        #toast.show{opacity:1;bottom:28px}
-    </style>
+        .oil-referral-badge{background:rgba(139,92,246,.1);color:#8b5cf6;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:3px}
+</style>
 </head>
 <body>
 
@@ -199,7 +199,7 @@ const app=initializeApp(fc),auth=getAuth(app),db=getFirestore(app);
 
 // القيم الافتراضية - تتحدث من لوحة التحكم
 var RATES={gold:2500,elixir:5000,oil:1000};
-var SELL_FEE=0.5;
+var SELL_FEE=0.02;
 var MIN_WITHDRAW=500;
 var ALLOW_WITHDRAW=true;
 
@@ -209,7 +209,7 @@ let pendingAmount=0,selectedMethod='',selectedAgent=null,agents=[];
 let exchangeMode='buy';
 let currentTab='wallet'; // wallet, charge
 let paymentInfo={fullName:'',cardNumber:''};
-let teamMembers=[], teamTotalWithdrawals=0, teamTotalEarnings=0;
+let teamMembers=[], teamTotalWithdrawals=0, teamTotalEarnings=0, teamTotalOilEarnings=0;
 let allPosts=[]; // لتخزين جميع المنشورات
 
 function toast(m,ok){ok=ok!==false;var t=document.getElementById('toast');t.textContent=m;t.style.background=ok?'#10b981':'#ef4444';t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2500)}
@@ -286,7 +286,10 @@ async function loadTeamData(uid){
     teamMembers=[];
     teamTotalWithdrawals=0;
     teamTotalEarnings=0;
+    teamTotalOilEarnings=0;
+    
     try{
+        // جلب المستخدمين الذين friendUid = uid الحالي
         var refQ=await getDocs(query(collection(db,"users"),where("friendUid","==",uid)));
         var members=[];
         refQ.forEach(function(d){members.push({uid:d.id,...d.data()})});
@@ -294,6 +297,7 @@ async function loadTeamData(uid){
         if(members.length===0){return;}
         
         for(var m of members){
+            // جلب طلبات السحب لهذا العضو
             var wq=await getDocs(query(collection(db,"withdraw_requests"),where("uid","==",m.uid)));
             var totalMemberWithdraw=0;
             var earnedFromMember=0;
@@ -303,8 +307,30 @@ async function loadTeamData(uid){
                 earnedFromMember+=(w.friendFee||0);
             });
             
+            // جلب أرباح النفط من الإحالة لهذا العضو
+            var memberResources=await getDoc(doc(db,"resources",m.uid));
+            var memberReferralOil=0;
+            if(memberResources.exists()){
+                memberReferralOil=memberResources.data().referralOil || 0;
+            }
+            
+            // جلب سجل تجميع البئر لمعرفة كم نفط وصل من هذا العضو
+            var oilFromMember=0;
+            try{
+                var oilWellsDoc=await getDoc(doc(db,"oil_wells",m.uid));
+                if(oilWellsDoc.exists()){
+                    var history=oilWellsDoc.data().collectionHistory||[];
+                    history.forEach(function(h){
+                        if(h.referralCut && h.referralCut > 0){
+                            oilFromMember += h.referralCut;
+                        }
+                    });
+                }
+            }catch(e){}
+            
             teamTotalWithdrawals+=totalMemberWithdraw;
             teamTotalEarnings+=earnedFromMember;
+            teamTotalOilEarnings+=oilFromMember;
             
             teamMembers.push({
                 uid:m.uid,
@@ -312,15 +338,15 @@ async function loadTeamData(uid){
                 emoji:m.emoji||'👤',
                 avatarType:m.avatarType,
                 avatarUrl:m.avatarUrl,
-                email:m.email,
                 userId:m.userId||m.uid.slice(0,6),
                 totalWithdrawals:totalMemberWithdraw,
                 earnedFromMember:earnedFromMember,
+                oilFromMember:oilFromMember,
                 joinDate:m.createdAt
             });
         }
         
-        teamMembers.sort(function(a,b){return b.earnedFromMember - a.earnedFromMember});
+        teamMembers.sort(function(a,b){return (b.earnedFromMember + b.oilFromMember) - (a.earnedFromMember + a.oilFromMember)});
         
         var badge=document.getElementById('teamBadge');
         if(badge){
@@ -349,13 +375,14 @@ function renderMain(){
         '</div>';
     
     if(currentTab==='wallet'){
-        // بطاقة ملخص الفريق
+        // بطاقة ملخص الفريق - مع إضافة النفط
         if(teamMembers.length>0){
             html+='<div class="section-card" style="cursor:pointer" onclick="openTeamModal()">'+
                 '<h3><i class="fas fa-users"></i> فريقي <span style="font-size:12px;color:#10b981">('+teamMembers.length+' أعضاء)</span></h3>'+
                 '<div class="referral-summary">'+
                 '<div><strong>'+fNum(teamTotalWithdrawals)+'</strong><span>إجمالي سحوباتهم</span></div>'+
-                '<div><strong>'+fNum(teamTotalEarnings)+'</strong><span>وصلني منهم</span></div>'+
+                '<div><strong>'+fNum(teamTotalEarnings)+'</strong><span>TMX منهم</span></div>'+
+                '<div><strong>'+fNum(teamTotalOilEarnings)+'</strong><span>🛢️ نفط منهم</span></div>'+
                 '</div>'+
                 '<p style="text-align:center;font-size:11px;color:#64748b;margin-top:4px">👆 اضغط للاطلاع على التفاصيل</p></div>';
         }
@@ -367,7 +394,7 @@ function renderMain(){
             '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.elixir)+'</strong>🧪 إكسير</div>'+
             '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.oil)+'</strong>🛢️ نفط</div>'+
             '</div>'+
-            '<div style="text-align:center;color:#ef4444;font-size:11px;margin-top:6px">⚠️ البيع يستقطع '+Math.round(SELL_FEE*100)+'% رسوم</div></div>';
+            '<div style="text-align:center;color:#ef4444;font-size:11px;margin-top:6px">⚠️ البيع يستقطع '+Math.round(SELL_FEE*0)+'2% رسوم</div></div>';
         
         // تبويبات شراء/بيع
         html+='<div class="section-card"><div class="tab-row">'+
@@ -430,8 +457,7 @@ function renderMain(){
                     '<div class="charge-agent-avatar">'+(a.avatarType==='image'&&a.avatarUrl?'<img src="'+a.avatarUrl+'" onerror="this.innerHTML=\'<span>'+ (a.emoji||'👤') +'</span>\'">':'<span>'+(a.emoji||'👤')+'</span>')+'</div>'+
                     '<div class="charge-agent-info">'+
                     '<strong>'+(a.username||'وكيل')+'</strong>'+
-                    '<small>🆔 '+(a.userId||a.uid.slice(0,6))+'</small><br>'+
-                    '<small>📧 '+a.email+'</small>'+
+                    '<small>🆔 '+(a.userId||a.uid.slice(0,6))+'</small>'+
                     '</div>'+
                     '<div class="charge-agent-arrow"><i class="fas fa-chevron-left"></i></div>'+
                     '</div>';
@@ -489,10 +515,6 @@ window.openAgentFullProfile=function(agentUid){
     var agentPosts=allPosts.filter(function(p){return p.userId===userId});
     agentPosts.sort(function(a,b){return(b.timestamp||0)-(a.timestamp||0)});
     
-    // جلب عدد المتابعين (تقديري)
-    var followersCount=0;
-    // يمكن إضافة استعلام فعلي هنا إذا أردت
-    
     var content=document.getElementById('agentFullProfileContent');
     var html='';
     
@@ -502,7 +524,6 @@ window.openAgentFullProfile=function(agentUid){
         '<div>'+
         '<h2 style="color:#fff;margin:0;font-size:20px">'+(agent.username||'وكيل')+'</h2>'+
         '<span style="background:#fbbf24;color:#000;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">🆔 '+userId+'</span>'+
-        '<p style="color:#aaa;font-size:11px;margin:5px 0">📧 '+agent.email+'</p>'+
         '</div>'+
         '</div>';
     
@@ -515,7 +536,6 @@ window.openAgentFullProfile=function(agentUid){
     // إحصائيات
     html+='<div class="full-profile-stats">'+
         '<div class="full-profile-stat"><strong>'+agentPosts.length+'</strong><span>منشورات</span></div>'+
-        '<div class="full-profile-stat"><strong>'+followersCount+'</strong><span>متابعين</span></div>'+
         '<div class="full-profile-stat"><strong>وكيل</strong><span>الحالة</span></div>'+
         '</div>';
     
@@ -586,7 +606,8 @@ window.openTeamModal=function(){
         summaryHtml='<div class="referral-summary">'+
             '<div><strong>'+teamMembers.length+'</strong><span>عدد الأعضاء</span></div>'+
             '<div><strong>'+fNum(teamTotalWithdrawals)+'</strong><span>إجمالي سحوباتهم</span></div>'+
-            '<div><strong>'+fNum(teamTotalEarnings)+'</strong><span>وصلني منهم</span></div>'+
+            '<div><strong>'+fNum(teamTotalEarnings)+'</strong><span>TMX منهم</span></div>'+
+            '<div><strong>'+fNum(teamTotalOilEarnings)+'</strong><span>🛢️ نفط منهم</span></div>'+
             '</div>';
     }
     document.getElementById('teamSummary').innerHTML=summaryHtml;
@@ -595,11 +616,20 @@ window.openTeamModal=function(){
     if(teamMembers.length===0){
         listHtml='<p style="text-align:center;color:#94a3b8;padding:20px">لا يوجد أعضاء حالياً في فريقك</p>';
     } else {
-        teamMembers.forEach(function(m){
+        listHtml+='<div style="margin-top:10px;font-size:12px;color:#64748b;text-align:center;margin-bottom:10px">📊 مرتبة حسب أعلى ربح</div>';
+        teamMembers.forEach(function(m, index){
             listHtml+='<div class="team-member-card">'+
                 '<div class="team-member-avatar">'+(m.avatarType==='image'&&m.avatarUrl?'<img src="'+m.avatarUrl+'">':m.emoji||'👤')+'</div>'+
-                '<div style="flex:1"><strong>'+(m.username||'مستخدم')+'</strong><br><small>📧 '+m.email+'</small><br><small>🆔 '+(m.userId||'')+'</small></div>'+
-                '<div class="team-stats"><small>سحوباتهم</small><strong>'+fNum(m.totalWithdrawals)+' TMX</strong><small>وصلني</small><strong style="color:#f59e0b">'+fNum(m.earnedFromMember)+' TMX</strong></div>'+
+                '<div style="flex:1">'+
+                '<strong>'+(m.username||'مستخدم')+'</strong>'+
+                '<br><small>🆔 '+(m.userId||'')+'</small>'+
+                (index===0?' <span style="color:#fbbf24;font-size:12px">👑 الأعلى ربحاً</span>':'')+
+                '</div>'+
+                '<div class="team-stats">'+
+                '<small>سحوباتهم</small><strong>'+fNum(m.totalWithdrawals)+' TMX</strong>'+
+                '<small>وصلني TMX</small><strong style="color:#f59e0b">'+fNum(m.earnedFromMember)+' TMX</strong>'+
+                (m.oilFromMember > 0 ? '<small>🛢️ وصلني نفط</small><strong style="color:#2dd4bf">'+fNum(m.oilFromMember)+' نفط</strong>' : '')+
+                '</div>'+
                 '</div>';
         });
     }
