@@ -824,6 +824,266 @@ onAuthStateChanged(auth,async function(user){
     if(user){me=user;await loadData(user.uid)}
     else{document.getElementById('mainContainer').innerHTML='<p style="text-align:center;padding:50px;color:#94a3b8">يرجى تسجيل الدخول</p>'}
 });
+
+ // ==========================================
+// نظام التخزين المؤقت الشامل - المحفظة (مخفي تماماً)
+// يشمل: الموارد + بيانات المستخدم + سجل العمليات + الوكلاء + أسعار الصرف
+// ==========================================
+
+const CACHE_KEYS = {
+    resources: 'wallet_resources_v2',
+    userData: 'wallet_user_data_v2',
+    transactions: 'wallet_transactions_v2',
+    withdrawRequests: 'wallet_withdraw_requests_v2',
+    agents: 'wallet_agents_v2',
+    rates: 'wallet_rates_v2',
+    settings: 'wallet_settings_v2',
+    allPosts: 'wallet_all_posts_v2',
+    teamData: 'wallet_team_data_v2',
+    cacheTimestamp: 'wallet_cache_timestamp_v2'
+};
+
+const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 ساعة كاملة
+
+// ========== دوال التخزين العامة ==========
+function saveToCache(key, data) {
+    try {
+        localStorage.setItem(key, JSON.stringify(data));
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+function getFromCache(key) {
+    try {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : null;
+    } catch (e) {
+        return null;
+    }
+}
+
+function removeFromCache(key) {
+    localStorage.removeItem(key);
+}
+
+function clearAllCache() {
+    Object.values(CACHE_KEYS).forEach(key => localStorage.removeItem(key));
+}
+
+// التحقق من صلاحية الكاش
+function isCacheValid() {
+    const timestamp = getFromCache(CACHE_KEYS.cacheTimestamp);
+    if (!timestamp) return false;
+    
+    const cacheAge = Date.now() - timestamp;
+    if (cacheAge > CACHE_DURATION) {
+        clearAllCache();
+        return false;
+    }
+    
+    return true;
+}
+
+function updateCacheTimestamp() {
+    saveToCache(CACHE_KEYS.cacheTimestamp, Date.now());
+}
+
+// ========== تخزين كل البيانات ==========
+function cacheAllData() {
+    if (!resources || !me) return;
+    
+    // تخزين الموارد
+    saveToCache(CACHE_KEYS.resources, {
+        gold: resources.gold || 0,
+        elixir: resources.elixir || 0,
+        money: resources.money || 0,
+        oil: resources.oil || 0
+    });
+    
+    // تخزين بيانات المستخدم
+    if (myData) {
+        saveToCache(CACHE_KEYS.userData, {
+            username: myData.username || 'مستخدم',
+            userId: myData.userId || me.uid.slice(0, 6),
+            email: myData.email || '',
+            uid: me.uid,
+            emoji: myData.emoji || '😎',
+            avatarType: myData.avatarType || 'emoji',
+            avatarUrl: myData.avatarUrl || '',
+            bio: myData.bio || '',
+            relationship: myData.relationship || 'اعزب',
+            colors: myData.colors || {}
+        });
+    }
+    
+    // تخزين سجل العمليات
+    if (transactions && transactions.length > 0) {
+        const recentTransactions = [...transactions]
+            .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
+            .slice(0, 20);
+        saveToCache(CACHE_KEYS.transactions, recentTransactions);
+    }
+    
+    // تخزين طلبات السحب
+    if (withdrawRequests && withdrawRequests.length > 0) {
+        saveToCache(CACHE_KEYS.withdrawRequests, withdrawRequests.slice(0, 10));
+    }
+    
+    // تخزين الوكلاء
+    if (agents && agents.length > 0) {
+        const agentsCache = agents.map(a => ({
+            uid: a.uid,
+            username: a.username,
+            userId: a.userId,
+            emoji: a.emoji,
+            avatarType: a.avatarType,
+            avatarUrl: a.avatarUrl,
+            bio: a.bio,
+            email: a.email
+        }));
+        saveToCache(CACHE_KEYS.agents, agentsCache);
+    }
+    
+    // تخزين أسعار الصرف
+    saveToCache(CACHE_KEYS.rates, RATES);
+    
+    // تخزين الإعدادات
+    saveToCache(CACHE_KEYS.settings, {
+        SELL_FEE: SELL_FEE,
+        MIN_WITHDRAW: MIN_WITHDRAW,
+        ALLOW_WITHDRAW: ALLOW_WITHDRAW
+    });
+    
+    // تخزين المنشورات
+    if (allPosts && allPosts.length > 0) {
+        const postsCache = allPosts.slice(0, 30);
+        saveToCache(CACHE_KEYS.allPosts, postsCache);
+    }
+    
+    // تخزين بيانات الفريق
+    if (teamMembers && teamMembers.length > 0) {
+        saveToCache(CACHE_KEYS.teamData, {
+            members: teamMembers.slice(0, 20),
+            totalWithdrawals: teamTotalWithdrawals,
+            totalEarnings: teamTotalEarnings,
+            totalOilEarnings: teamTotalOilEarnings
+        });
+    }
+    
+    updateCacheTimestamp();
+}
+
+// ========== استرجاع وتطبيق البيانات المخزنة ==========
+function applyCachedData() {
+    if (!isCacheValid()) return false;
+    
+    // استرجاع الموارد
+    const cachedResources = getFromCache(CACHE_KEYS.resources);
+    if (cachedResources) {
+        resources.gold = cachedResources.gold || 0;
+        resources.elixir = cachedResources.elixir || 0;
+        resources.money = cachedResources.money || 0;
+        resources.oil = cachedResources.oil || 0;
+    }
+    
+    // استرجاع بيانات المستخدم
+    const cachedUser = getFromCache(CACHE_KEYS.userData);
+    if (cachedUser) {
+        myData = cachedUser;
+    }
+    
+    // استرجاع أسعار الصرف
+    const cachedRates = getFromCache(CACHE_KEYS.rates);
+    if (cachedRates) {
+        RATES = cachedRates;
+    }
+    
+    // استرجاع الإعدادات
+    const cachedSettings = getFromCache(CACHE_KEYS.settings);
+    if (cachedSettings) {
+        SELL_FEE = cachedSettings.SELL_FEE || 0.02;
+        MIN_WITHDRAW = cachedSettings.MIN_WITHDRAW || 500;
+        ALLOW_WITHDRAW = cachedSettings.ALLOW_WITHDRAW !== undefined ? cachedSettings.ALLOW_WITHDRAW : true;
+    }
+    
+    // استرجاع سجل العمليات
+    const cachedTransactions = getFromCache(CACHE_KEYS.transactions);
+    if (cachedTransactions) {
+        transactions = cachedTransactions;
+    }
+    
+    // استرجاع طلبات السحب
+    const cachedWithdraws = getFromCache(CACHE_KEYS.withdrawRequests);
+    if (cachedWithdraws) {
+        withdrawRequests = cachedWithdraws;
+    }
+    
+    // استرجاع الوكلاء
+    const cachedAgents = getFromCache(CACHE_KEYS.agents);
+    if (cachedAgents) {
+        agents = cachedAgents;
+    }
+    
+    // استرجاع المنشورات
+    const cachedPosts = getFromCache(CACHE_KEYS.allPosts);
+    if (cachedPosts) {
+        allPosts = cachedPosts;
+    }
+    
+    // استرجاع بيانات الفريق
+    const cachedTeam = getFromCache(CACHE_KEYS.teamData);
+    if (cachedTeam) {
+        teamMembers = cachedTeam.members || [];
+        teamTotalWithdrawals = cachedTeam.totalWithdrawals || 0;
+        teamTotalEarnings = cachedTeam.totalEarnings || 0;
+        teamTotalOilEarnings = cachedTeam.totalOilEarnings || 0;
+    }
+    
+    return true;
+}
+
+// ========== تعديل دوال التحميل الأصلية ==========
+
+// تعديل loadData لحفظ البيانات تلقائياً بعد التحميل
+const originalLoadData = loadData;
+loadData = async function(uid) {
+    // محاولة تحميل البيانات المخزنة أولاً
+    const hasCachedData = applyCachedData();
+    
+    if (hasCachedData) {
+        // عرض البيانات المخزنة فوراً (بدون أي مؤشرات)
+        renderMain();
+    }
+    
+    // تحميل البيانات الحية في الخلفية
+    await originalLoadData(uid);
+    
+    // تحديث الكاش بالبيانات الجديدة
+    cacheAllData();
+    
+    // إعادة عرض البيانات إذا كانت مختلفة (بدون أي إشعار)
+    if (hasCachedData) {
+        renderMain();
+    }
+};
+
+// ========== مسح الكاش عند تسجيل الخروج ==========
+const originalOnAuthStateChanged = onAuthStateChanged;
+onAuthStateChanged(auth, async function(user) {
+    if (!user) {
+        clearAllCache();
+    }
+    
+    // استدعاء الدالة الأصلية
+    if (user) {
+        me = user;
+        await loadData(user.uid);
+    } else {
+        document.getElementById('mainContainer').innerHTML = '<p style="text-align:center;padding:50px;color:#94a3b8">يرجى تسجيل الدخول</p>';
+    }
+});
 </script>
 </body>
 </html>
