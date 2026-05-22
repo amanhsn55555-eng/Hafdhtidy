@@ -15,7 +15,79 @@
         .team-btn{cursor:pointer;color:#64748b;font-size:20px;position:relative}
         .team-btn .badge{position:absolute;top:-8px;right:-10px;background:#ef4444;color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700}
         .container{padding:12px;max-width:550px;margin:0 auto}
-        
+           /* ========== الوضع المظلم الموحد ========== */
+body.dark-mode {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+}
+
+/* الصناديق والبطاقات */
+body.dark-mode .section-card,
+body.dark-mode .bal-card,
+body.dark-mode .modal-box,
+body.dark-mode .chat-item,
+body.dark-mode .chat-room,
+body.dark-mode .messenger-header,
+body.dark-mode .chats-container,
+body.dark-mode .chat-room-header,
+body.dark-mode .message-input-container,
+body.dark-mode .header,
+body.dark-mode .team-member-card,
+body.dark-mode .agent-card,
+body.dark-mode .charge-agent-card,
+body.dark-mode .all-chats-dialog,
+body.dark-mode .search-user-dialog,
+body.dark-mode .filter-dialog,
+body.dark-mode .chat-settings-dialog {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+/* الفقاعات في الماسنجر */
+body.dark-mode .message-bubble {
+    background: #334155 !important;
+    color: #f1f5f9 !important;
+}
+body.dark-mode .message-wrapper.sent .message-bubble {
+    background: #fbbf24 !important;
+    color: #0f172a !important;
+}
+
+/* الأرقام والقيم */
+body.dark-mode .bal-value {
+    color: #fbbf24 !important;
+}
+
+/* الأزرار والتبويبات */
+body.dark-mode .tab {
+    background: #334155 !important;
+    color: #94a3b8 !important;
+}
+body.dark-mode .tab.active {
+    background: #fbbf24 !important;
+    color: #0f172a !important;
+}
+
+/* الحقول */
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+/* الروابط والخطوط */
+body.dark-mode a {
+    color: #fbbf24 !important;
+}
+
+/* الحدود الفاصلة */
+body.dark-mode .history-item,
+body.dark-mode .border-bottom {
+    border-bottom-color: #334155 !important;
+}
         .balance-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
         .bal-card{background:linear-gradient(145deg,#f8fafc,#e2e8f0);box-shadow:inset 2px 2px 5px #fff,inset -2px -2px 5px #94a3b8,3px 3px 8px rgba(0,0,0,.1);border-radius:22px;padding:16px 12px;text-align:center}
         .bal-card.gold{border-bottom:3px solid #fbbf24}
@@ -394,7 +466,7 @@ function renderMain(){
             '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.elixir)+'</strong>🧪 إكسير</div>'+
             '<div class="rate-item">1💰 TMX<br>→<br><strong>'+fNum(RATES.oil)+'</strong>🛢️ نفط</div>'+
             '</div>'+
-            '<div style="text-align:center;color:#ef4444;font-size:11px;margin-top:6px">⚠️ البيع يستقطع '+Math.round(SELL_FEE*0)+'2% رسوم</div></div>';
+            '<div style="text-align:center;color:#ef4444;font-size:11px;margin-top:6px">⚠️ البيع يستقطع '+Math.round(SELL_FEE*100)+'% رسوم</div></div>';
         
         // تبويبات شراء/بيع
         html+='<div class="section-card"><div class="tab-row">'+
@@ -675,9 +747,8 @@ window.updateSell=function(){
     document.getElementById('sellAvail').textContent=fNum(resources[type]||0);
     if(amt>0){
         var rate=RATES[type]||1;
-        var received=Math.floor((amt/rate)*SELL_FEE);
-        document.getElementById('sellPreview').innerHTML='بيع '+fNum(amt)+' '+{gold:'ذهب',elixir:'إكسير',oil:'نفط'}[type]+' = <strong>'+fNum(received)+' TMX</strong> (بعد خصم '+Math.round(SELL_FEE*100)+'%)';
-    } else {document.getElementById('sellPreview').innerHTML='أدخل كمية لرؤية العائد'}
+        var received=Math.floor((amt/rate)*(1-SELL_FEE));
+        document.getElementById('sellPreview').innerHTML='بيع '+fNum(amt)+' '+{gold:'ذهب',elixir:'إكسير',oil:'نفط'}[type]+' = <strong>'+fNum(received)+' TMX</strong> (بعد خصم '+Math.round(SELL_FEE*100)+'%)';    } else {document.getElementById('sellPreview').innerHTML='أدخل كمية لرؤية العائد'}
 };
 window.execSell=async function(){
     var type=document.getElementById('sellType').value;
@@ -685,7 +756,7 @@ window.execSell=async function(){
     if(amt<1)return toast('أدخل كمية',false);
     if((resources[type]||0)<amt)return toast('رصيد غير كاف',false);
     var rate=RATES[type]||1;
-    var received=Math.floor((amt/rate)*SELL_FEE);
+    var received=Math.floor((amt/rate)*(1-SELL_FEE));
     var names={gold:'ذهب',elixir:'إكسير',oil:'نفط'};
     try{
         var upd={};upd[type]=increment(-amt);upd.money=increment(received);
@@ -1084,6 +1155,24 @@ onAuthStateChanged(auth, async function(user) {
         document.getElementById('mainContainer').innerHTML = '<p style="text-align:center;padding:50px;color:#94a3b8">يرجى تسجيل الدخول</p>';
     }
 });
+     (function() {
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+    }
+    var savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+    }
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'theme') {
+            applyTheme(e.newValue);
+        }
+    });
+})();
 </script>
 </body>
 </html>
